@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Translatable\HasTranslations;
+
+class PlayerSkill extends Model
+{
+    use HasFactory;
+    use HasTranslations;
+
+    protected $guarded = ['id'];
+
+    /** @var list<string> */
+    public array $translatable = ['label'];
+
+    protected function casts(): array
+    {
+        return [
+            'value' => 'integer',
+            'sort_order' => 'integer',
+        ];
+    }
+
+    public function player(): BelongsTo
+    {
+        return $this->belongsTo(Player::class);
+    }
+}

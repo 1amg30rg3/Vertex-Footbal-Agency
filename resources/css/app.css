@@ -1,0 +1,326 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../js/**/*.vue';
+@source '../js/**/*.js';
+
+:root,
+:root[data-theme='dark'] {
+    color-scheme: dark;
+
+    --bg: oklch(0.16 0.006 285);
+    --bg-elevated: oklch(0.19 0.007 285);
+    --surface: oklch(0.21 0.008 285);
+    --surface-2: oklch(0.25 0.009 285);
+    --surface-3: oklch(0.3 0.01 285);
+
+    --fg: oklch(0.97 0.002 285);
+    --fg-muted: oklch(0.72 0.012 285);
+    --fg-subtle: oklch(0.58 0.012 285);
+
+    --border: oklch(0.31 0.01 285);
+    --border-strong: oklch(0.42 0.014 285);
+
+    --accent: #cd942c;
+    --accent-hover: #dea63e;
+    --accent-fg: #1f1608;
+    --accent-soft: #cd942c24;
+    --accent-ring: #cd942c73;
+
+    --success: oklch(0.75 0.16 155);
+    --success-soft: oklch(0.75 0.16 155 / 0.15);
+    --warning: oklch(0.8 0.15 75);
+    --warning-soft: oklch(0.8 0.15 75 / 0.15);
+    --danger: oklch(0.68 0.19 24);
+    --danger-soft: oklch(0.68 0.19 24 / 0.15);
+    --info: oklch(0.72 0.13 240);
+    --info-soft: oklch(0.72 0.13 240 / 0.15);
+
+    --overlay: oklch(0.08 0.005 285 / 0.72);
+    --shadow-color: 0 0% 0%;
+    --shadow-strength: 0.5;
+}
+
+:root[data-theme='light'] {
+    color-scheme: light;
+
+    --bg: oklch(0.985 0.002 285);
+    --bg-elevated: oklch(1 0 0);
+    --surface: oklch(1 0 0);
+    --surface-2: oklch(0.968 0.003 285);
+    --surface-3: oklch(0.936 0.004 285);
+
+    --fg: oklch(0.19 0.008 285);
+    --fg-muted: oklch(0.45 0.012 285);
+    --fg-subtle: oklch(0.58 0.012 285);
+
+    --border: oklch(0.9 0.004 285);
+    --border-strong: oklch(0.8 0.008 285);
+
+    --accent: #cd942c;
+    --accent-hover: #b48022;
+    --accent-fg: #1f1608;
+    --accent-soft: #cd942c21;
+    --accent-ring: #cd942c66;
+
+    --success: oklch(0.56 0.15 155);
+    --success-soft: oklch(0.56 0.15 155 / 0.13);
+    --warning: oklch(0.65 0.15 75);
+    --warning-soft: oklch(0.65 0.15 75 / 0.15);
+    --danger: oklch(0.55 0.2 25);
+    --danger-soft: oklch(0.55 0.2 25 / 0.12);
+    --info: oklch(0.55 0.15 250);
+    --info-soft: oklch(0.55 0.15 250 / 0.12);
+
+    --overlay: oklch(0.3 0.01 285 / 0.42);
+    --shadow-color: 285 20% 40%;
+    --shadow-strength: 0.13;
+}
+
+@theme inline {
+    --font-sans:
+        'Instrument Sans', 'Noto Sans Georgian', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-bg: var(--bg);
+    --color-bg-elevated: var(--bg-elevated);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-surface-3: var(--surface-3);
+
+    --color-fg: var(--fg);
+    --color-fg-muted: var(--fg-muted);
+    --color-fg-subtle: var(--fg-subtle);
+
+    --color-border: var(--border);
+    --color-border-strong: var(--border-strong);
+
+    --color-accent: var(--accent);
+    --color-accent-hover: var(--accent-hover);
+    --color-accent-fg: var(--accent-fg);
+    --color-accent-soft: var(--accent-soft);
+    --color-accent-ring: var(--accent-ring);
+
+    --color-success: var(--success);
+    --color-success-soft: var(--success-soft);
+    --color-warning: var(--warning);
+    --color-warning-soft: var(--warning-soft);
+    --color-danger: var(--danger);
+    --color-danger-soft: var(--danger-soft);
+    --color-info: var(--info);
+    --color-info-soft: var(--info-soft);
+
+    --color-overlay: var(--overlay);
+}
+
+@layer base {
+    * {
+        border-color: var(--border);
+    }
+
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        background-color: var(--bg);
+        color: var(--fg);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    html.theme-ready body,
+    html.theme-ready .theme-transition {
+        transition:
+            background-color 200ms ease,
+            border-color 200ms ease,
+            color 200ms ease;
+    }
+
+    ::selection {
+        background: var(--accent);
+        color: var(--accent-fg);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-strong) transparent;
+    }
+
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--border-strong);
+        border: 3px solid transparent;
+        border-radius: 999px;
+        background-clip: padding-box;
+        transition: background-color 150ms ease;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--accent);
+        background-clip: padding-box;
+    }
+
+    ::-webkit-scrollbar-thumb:active {
+        background-color: var(--accent-hover);
+        background-clip: padding-box;
+    }
+
+    ::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+}
+
+@layer components {
+    .scrollbar-thin {
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-strong) transparent;
+    }
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        border-width: 2px;
+    }
+
+    .prose-content {
+        color: var(--fg-muted);
+        line-height: 1.75;
+    }
+    .prose-content > * + * {
+        margin-top: 1em;
+    }
+    .prose-content h1,
+    .prose-content h2,
+    .prose-content h3,
+    .prose-content h4 {
+        color: var(--fg);
+        font-weight: 600;
+        line-height: 1.25;
+        margin-top: 1.6em;
+    }
+    .prose-content h1 {
+        font-size: 1.875rem;
+    }
+    .prose-content h2 {
+        font-size: 1.5rem;
+    }
+    .prose-content h3 {
+        font-size: 1.25rem;
+    }
+    .prose-content h4 {
+        font-size: 1.075rem;
+    }
+    .prose-content p {
+        margin-bottom: 0;
+    }
+    .prose-content strong {
+        color: var(--fg);
+        font-weight: 600;
+    }
+    .prose-content a {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+    .prose-content a:hover {
+        color: var(--accent-hover);
+    }
+    .prose-content ul,
+    .prose-content ol {
+        padding-left: 1.5rem;
+    }
+    .prose-content ul {
+        list-style: disc;
+    }
+    .prose-content ol {
+        list-style: decimal;
+    }
+    .prose-content li::marker {
+        color: var(--accent);
+    }
+    .prose-content li + li {
+        margin-top: 0.4em;
+    }
+    .prose-content blockquote {
+        border-left: 3px solid var(--accent);
+        padding-left: 1rem;
+        font-style: italic;
+        color: var(--fg);
+    }
+    .prose-content hr {
+        border-color: var(--border);
+    }
+    .prose-content img {
+        border-radius: 0.75rem;
+        max-width: 100%;
+        height: auto;
+    }
+    .prose-content code {
+        background: var(--surface-2);
+        border-radius: 0.3rem;
+        padding: 0.15em 0.4em;
+        font-size: 0.9em;
+    }
+    .prose-content pre {
+        background: var(--surface-2);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        overflow-x: auto;
+    }
+    .prose-content pre code {
+        background: transparent;
+        padding: 0;
+    }
+    .prose-content table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .prose-content th,
+    .prose-content td {
+        border: 1px solid var(--border);
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+    }
+
+    .tiptap {
+        outline: none;
+        min-height: 10rem;
+    }
+    .tiptap p.is-editor-empty:first-child::before {
+        content: attr(data-placeholder);
+        color: var(--fg-subtle);
+        float: left;
+        height: 0;
+        pointer-events: none;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}

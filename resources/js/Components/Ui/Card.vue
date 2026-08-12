@@ -21,7 +21,7 @@ const classes = computed(() => [
     tones[props.tone],
     props.bordered ? 'border border-border' : '',
     paddings[props.padding],
-    props.hoverable ? 'transition-[border-color,transform,box-shadow] duration-200 hover:border-accent/50 hover:-translate-y-0.5' : '',
+    props.hoverable ? 'transition-[border-color,translate,box-shadow] duration-200 hover:border-accent/50 hover:-translate-y-0.5' : '',
 ]);
 </script>
 

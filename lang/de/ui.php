@@ -55,6 +55,13 @@ return [
         'meet_players' => 'Unsere Spieler',
         'meet_trainers' => 'Unsere Trainer',
         'discover' => 'Mehr entdecken',
+        'clubs_eyebrow' => 'Wo unsere Spieler antreten',
+        'stats_title' => 'In Zahlen',
+        'stats_lead' => 'Der Kader, den wir heute vertreten.',
+        'stats_players' => 'Vertretene Spieler',
+        'stats_clubs' => 'Klubs',
+        'stats_countries' => 'Länder',
+        'stats_trainers' => 'Trainerteam',
     ],
 
     'players' => [

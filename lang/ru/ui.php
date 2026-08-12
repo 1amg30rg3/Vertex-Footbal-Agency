@@ -55,6 +55,13 @@ return [
         'meet_players' => 'Наши футболисты',
         'meet_trainers' => 'Наши тренеры',
         'discover' => 'Узнать больше',
+        'clubs_eyebrow' => 'Где играют наши футболисты',
+        'stats_title' => 'В цифрах',
+        'stats_lead' => 'Состав, который мы представляем сегодня.',
+        'stats_players' => 'Представляемых футболистов',
+        'stats_clubs' => 'Клубов',
+        'stats_countries' => 'Стран',
+        'stats_trainers' => 'Тренерский штаб',
     ],
 
     'players' => [

@@ -4,7 +4,7 @@ import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { useI18n } from '@/Composables/useI18n';
 import { useRoute } from '@/Support/ziggy';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
-import SectionHeading from '@/Components/Site/SectionHeading.vue';
+import PageHero from '@/Components/Site/PageHero.vue';
 import FormField from '@/Components/Form/FormField.vue';
 import TextInput from '@/Components/Form/TextInput.vue';
 import TextArea from '@/Components/Form/TextArea.vue';
@@ -74,11 +74,11 @@ function submit() {
     </Head>
 
     <PublicLayout>
-        <div class="mx-auto max-w-7xl px-4 py-14 pb-24 sm:px-6 lg:px-8 lg:py-20 lg:pb-28">
-            <SectionHeading number="01" :title="t('contacts.title')" :lead="t('contacts.lead')" as="h1" />
+        <PageHero :title="t('contacts.title')" :lead="t('contacts.lead')" />
 
-            <div class="mt-12 grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-                <div class="space-y-8">
+        <div class="mx-auto max-w-7xl px-4 py-16 pb-24 sm:px-6 lg:px-8 lg:py-24 lg:pb-32">
+            <div class="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+                <div v-reveal class="space-y-8">
                     <ul class="space-y-5">
                         <li v-for="item in details" :key="item.label" class="flex items-start gap-4">
                             <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
@@ -118,7 +118,7 @@ function submit() {
                     </div>
                 </div>
 
-                <div class="rounded-2xl border border-border bg-surface p-6 sm:p-8">
+                <div v-reveal="90" class="rounded-2xl border border-border bg-surface p-6 sm:p-8">
                     <h2 class="text-xl font-semibold tracking-tight text-fg">{{ t('contacts.form_title') }}</h2>
                     <p class="mt-1.5 text-sm text-fg-muted">{{ t('contacts.form_lead') }}</p>
 

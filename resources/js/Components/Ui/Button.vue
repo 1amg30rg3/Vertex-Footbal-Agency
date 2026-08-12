@@ -42,7 +42,7 @@ const squareSizes = { xs: 'h-7 w-7', sm: 'h-9 w-9', md: 'h-10 w-10', lg: 'h-12 w
 
 const classes = computed(() => [
     'inline-flex items-center justify-center font-medium tracking-tight',
-    'transition-[background-color,border-color,color,opacity,transform] duration-150',
+    'transition-[background-color,border-color,color,opacity,scale] duration-150',
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
     'disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98]',
     'whitespace-nowrap select-none',

@@ -49,27 +49,29 @@ const contactLinks = computed(() => {
                 <img v-if="trainer.cover" :src="trainer.cover" alt="" class="h-full w-full object-cover">
                 <div v-else class="h-full w-full bg-surface-2" />
                 <div class="absolute inset-0 bg-gradient-to-t from-bg via-bg/85 to-bg/60" />
+                <div class="texture-hatch absolute inset-0 opacity-[0.09]" />
             </div>
 
-            <div class="mx-auto max-w-7xl px-4 pb-12 pt-16 sm:px-6 lg:px-8 lg:pb-16 lg:pt-24">
-                <Button :href="route('public.trainers.index')" variant="ghost" size="sm" icon="arrowLeft" class="mb-8">
+            <div class="mx-auto max-w-7xl px-4 pb-14 pt-14 sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
+                <Button :href="route('public.trainers.index')" variant="ghost" size="sm" icon="arrowLeft" class="mb-10">
                     {{ t('trainers.title') }}
                 </Button>
 
                 <div class="flex flex-col gap-6 sm:flex-row sm:items-end">
                     <div
                         v-if="trainer.photo"
-                        class="h-28 w-28 shrink-0 overflow-hidden rounded-2xl border-2 border-accent/40 bg-surface-2 sm:h-36 sm:w-36"
+                        v-reveal
+                        class="h-28 w-28 shrink-0 overflow-hidden rounded-2xl border-2 border-accent/40 bg-surface-2 sm:h-40 sm:w-40"
                     >
                         <img :src="trainer.photo" :alt="trainer.full_name" class="h-full w-full object-cover">
                     </div>
 
-                    <div class="min-w-0">
+                    <div v-reveal="80" class="min-w-0">
                         <Badge v-if="trainer.role" tone="accent">{{ trainer.role }}</Badge>
-                        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-fg sm:text-5xl">
+                        <h1 class="mt-4 font-semibold leading-[0.9] tracking-[-0.035em] text-fg text-[clamp(2.25rem,5.5vw,4rem)]">
                             {{ trainer.full_name }}
                         </h1>
-                        <p v-if="trainer.nationality" class="mt-2 flex items-center gap-1.5 text-sm text-fg-muted">
+                        <p v-if="trainer.nationality" class="mt-4 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-fg-muted">
                             <Icon name="globe" :size="14" />
                             {{ trainer.nationality }}
                         </p>
@@ -78,22 +80,24 @@ const contactLinks = computed(() => {
             </div>
         </section>
 
-        <div class="mx-auto max-w-7xl space-y-16 px-4 py-16 sm:px-6 lg:px-8 lg:space-y-24 lg:py-20">
+        <div class="mx-auto max-w-7xl space-y-20 px-4 py-20 sm:px-6 lg:px-8 lg:space-y-28 lg:py-28">
             <section v-if="trainer.bio">
-                <SectionHeading number="01" :title="t('trainers.about')" />
-                <Prose :html="trainer.bio" class="mt-6 max-w-3xl" size="lg" />
+                <SectionHeading v-reveal number="01" :title="t('trainers.about')" size="lg" />
+                <div v-reveal="80" class="mt-8 max-w-3xl">
+                    <Prose :html="trainer.bio" size="lg" />
+                </div>
             </section>
 
             <section v-if="trainer.career?.length">
-                <SectionHeading number="02" :title="t('trainers.work_history')" />
-                <div class="mt-8 max-w-3xl">
+                <SectionHeading v-reveal number="02" :title="t('trainers.work_history')" size="lg" />
+                <div v-reveal="80" class="mt-10 max-w-3xl">
                     <CareerTimeline :entries="trainer.career" />
                 </div>
             </section>
 
             <section v-if="contactLinks.length">
-                <SectionHeading number="03" :title="t('players.contact')" />
-                <ul class="mt-6 flex flex-wrap gap-3">
+                <SectionHeading v-reveal number="03" :title="t('players.contact')" size="lg" />
+                <ul v-reveal="80" class="mt-8 flex flex-wrap gap-3">
                     <li v-for="link in contactLinks" :key="link.href">
                         <a
                             :href="link.href"
@@ -109,9 +113,11 @@ const contactLinks = computed(() => {
             </section>
 
             <section v-if="related.length">
-                <SectionHeading :title="t('home.meet_trainers')" />
-                <div class="mt-8 grid gap-5 lg:grid-cols-2">
-                    <TrainerCard v-for="item in related" :key="item.id" :trainer="item" />
+                <SectionHeading v-reveal :title="t('home.meet_trainers')" size="lg" />
+                <div class="mt-10 grid gap-5 lg:grid-cols-2">
+                    <div v-for="(item, i) in related" :key="item.id" v-reveal="(i % 2) * 90">
+                        <TrainerCard :trainer="item" class="h-full" />
+                    </div>
                 </div>
             </section>
         </div>

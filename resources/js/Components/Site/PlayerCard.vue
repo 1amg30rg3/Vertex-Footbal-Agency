@@ -23,7 +23,7 @@ const image = computed(() => props.player.photo || props.player.cover);
 <template>
     <Link
         :href="href"
-        class="group relative block overflow-hidden rounded-2xl border border-border bg-surface transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-accent/60"
+        class="group relative block overflow-hidden rounded-2xl border border-border bg-surface transition-[border-color,translate] duration-300 hover:-translate-y-1 hover:border-accent/60"
     >
         <div class="relative aspect-[3/4] overflow-hidden bg-surface-2">
             <img

@@ -4,7 +4,7 @@ import { Head, router } from '@inertiajs/vue3';
 import { useI18n } from '@/Composables/useI18n';
 import { useRoute } from '@/Support/ziggy';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
-import SectionHeading from '@/Components/Site/SectionHeading.vue';
+import PageHero from '@/Components/Site/PageHero.vue';
 import NewsCard from '@/Components/Site/NewsCard.vue';
 import Pagination from '@/Components/Data/Pagination.vue';
 import SearchInput from '@/Components/Data/SearchInput.vue';
@@ -43,10 +43,8 @@ function selectCategory(slug) {
     </Head>
 
     <PublicLayout>
-        <div class="mx-auto max-w-7xl px-4 py-14 pb-24 sm:px-6 lg:px-8 lg:py-20 lg:pb-28">
-            <SectionHeading number="01" :title="t('news.title')" :lead="t('news.lead')" as="h1" />
-
-            <div class="mt-10 flex flex-wrap items-center gap-3">
+        <PageHero :title="t('news.title')" :lead="t('news.lead')">
+            <div class="flex flex-wrap items-center gap-3">
                 <div class="min-w-0 flex-1 sm:max-w-xs">
                     <SearchInput v-model="search" :placeholder="t('common.search_placeholder')" />
                 </div>
@@ -76,14 +74,17 @@ function selectCategory(slug) {
                     </button>
                 </div>
             </div>
+        </PageHero>
 
-            <div v-if="articles.data.length" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <NewsCard v-for="article in articles.data" :key="article.id" :article="article" />
+        <div class="mx-auto max-w-7xl px-4 py-16 pb-24 sm:px-6 lg:px-8 lg:py-24 lg:pb-32">
+            <div v-if="articles.data.length" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div v-for="(article, i) in articles.data" :key="article.id" v-reveal="(i % 3) * 90">
+                    <NewsCard :article="article" class="h-full" />
+                </div>
             </div>
 
             <EmptyState
                 v-else
-                class="mt-10"
                 icon="newspaper"
                 :title="t('common.no_results')"
                 :description="search || category ? t('common.no_results_hint') : t('news.empty')"

@@ -7,6 +7,7 @@ import PublicLayout from '@/Layouts/PublicLayout.vue';
 import SectionHeading from '@/Components/Site/SectionHeading.vue';
 import PlayerCard from '@/Components/Site/PlayerCard.vue';
 import Prose from '@/Components/Site/Prose.vue';
+import CountUp from '@/Components/Site/CountUp.vue';
 import StatBar from '@/Components/Viz/StatBar.vue';
 import StatDonut from '@/Components/Viz/StatDonut.vue';
 import StatTile from '@/Components/Viz/StatTile.vue';
@@ -161,51 +162,59 @@ const goalBlocks = computed(() =>
                 <img v-if="player.cover" :src="player.cover" alt="" class="h-full w-full object-cover object-top">
                 <div v-else class="h-full w-full bg-surface-2" />
                 <div class="absolute inset-0 bg-gradient-to-t from-bg via-bg/85 to-bg/50" />
+                <div class="texture-hatch absolute inset-0 opacity-[0.09]" />
             </div>
 
-            <div class="mx-auto max-w-7xl px-4 pb-12 pt-16 sm:px-6 lg:px-8 lg:pb-16 lg:pt-24">
-                <Button :href="route('public.players.index')" variant="ghost" size="sm" icon="arrowLeft" class="mb-8">
+            <div class="mx-auto max-w-7xl px-4 pb-14 pt-14 sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
+                <Button :href="route('public.players.index')" variant="ghost" size="sm" icon="arrowLeft" class="mb-10">
                     {{ t('players.title') }}
                 </Button>
 
                 <div class="flex flex-col gap-8 sm:flex-row sm:items-end">
                     <div
                         v-if="player.photo"
-                        class="h-32 w-32 shrink-0 overflow-hidden rounded-2xl border-2 border-accent/40 bg-surface-2 sm:h-40 sm:w-40"
+                        v-reveal
+                        class="h-32 w-32 shrink-0 overflow-hidden rounded-2xl border-2 border-accent/40 bg-surface-2 sm:h-44 sm:w-44"
                     >
                         <img :src="player.photo" :alt="player.full_name" class="h-full w-full object-cover">
                     </div>
 
-                    <div class="min-w-0 flex-1">
+                    <div v-reveal="80" class="min-w-0 flex-1">
                         <div class="flex flex-wrap items-center gap-2">
                             <Badge v-if="positionLabel" tone="accent">{{ positionLabel }}</Badge>
                             <Badge v-if="player.nationality" tone="neutral" icon="globe">{{ player.nationality }}</Badge>
                         </div>
 
-                        <h1 class="mt-3 text-4xl font-semibold leading-none tracking-tight text-fg sm:text-6xl">
+                        <h1 class="mt-4 font-semibold leading-[0.88] tracking-[-0.04em] text-fg text-[clamp(2.5rem,7vw,5rem)]">
                             <span class="block text-fg-muted">{{ player.first_name }}</span>
                             <span class="block">{{ player.last_name }}</span>
                         </h1>
 
-                        <div v-if="player.current_club" class="mt-4 flex items-center gap-2.5">
+                        <div v-if="player.current_club" class="mt-5 flex items-center gap-2.5">
                             <img
                                 v-if="player.current_club_logo"
                                 :src="player.current_club_logo"
                                 alt=""
                                 class="h-7 w-7 rounded object-contain"
                             >
-                            <span class="text-sm text-fg-muted">{{ player.current_club }}</span>
+                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-fg-muted">
+                                {{ player.current_club }}
+                            </span>
                         </div>
                     </div>
 
-                    <dl v-if="player.totals" class="grid shrink-0 grid-cols-4 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                        <div v-for="key in ['matches', 'goals', 'assists', 'minutes']" :key="key" class="text-center sm:text-left">
-                            <dt class="text-[10px] font-semibold uppercase tracking-wide text-fg-subtle">
+                    <dl
+                        v-if="player.totals"
+                        v-reveal="160"
+                        class="grid shrink-0 grid-cols-4 gap-x-6 gap-y-5 sm:grid-cols-2 lg:grid-cols-4"
+                    >
+                        <div v-for="(key, i) in ['matches', 'goals', 'assists', 'minutes']" :key="key">
+                            <dd class="font-heading font-semibold leading-[0.85] tracking-[-0.04em] text-accent-2 text-[clamp(1.75rem,3.4vw,2.75rem)]">
+                                <CountUp :value="Number(player.totals[key])" :delay="160 + i * 80" />
+                            </dd>
+                            <dt class="mt-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-fg-subtle">
                                 {{ t(key === 'goals' ? 'players.goals_scored' : `players.${key}`) }}
                             </dt>
-                            <dd class="mt-0.5 text-xl font-semibold tabular-nums text-accent sm:text-2xl">
-                                {{ player.totals[key] }}
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -236,7 +245,7 @@ const goalBlocks = computed(() =>
 
         <div class="mx-auto max-w-7xl space-y-20 px-4 py-16 sm:px-6 lg:px-8 lg:space-y-28 lg:py-20">
             <section id="personal" class="scroll-mt-32">
-                <SectionHeading number="01" :title="t('players.sections.personal')" />
+                <SectionHeading v-reveal number="01" :title="t('players.sections.personal')" size="lg" />
 
                 <div class="mt-8 grid gap-6 lg:grid-cols-3">
                     <dl class="grid gap-x-8 gap-y-5 rounded-2xl border border-border bg-surface p-6 sm:grid-cols-2 lg:col-span-2">
@@ -278,7 +287,7 @@ const goalBlocks = computed(() =>
                 id="profile"
                 class="scroll-mt-32"
             >
-                <SectionHeading number="02" :title="t('players.sections.profile')" />
+                <SectionHeading v-reveal number="02" :title="t('players.sections.profile')" size="lg" />
 
                 <div class="mt-8 grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-12">
                     <div class="space-y-10">
@@ -316,7 +325,7 @@ const goalBlocks = computed(() =>
             </section>
 
             <section v-if="player.career?.length || player.achievements?.length" id="career" class="scroll-mt-32">
-                <SectionHeading number="03" :title="t('players.sections.career')" />
+                <SectionHeading v-reveal number="03" :title="t('players.sections.career')" size="lg" />
 
                 <div class="mt-8 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-12">
                     <div v-if="player.career?.length">
@@ -348,7 +357,7 @@ const goalBlocks = computed(() =>
             </section>
 
             <section v-if="player.seasons?.length" id="statistics" class="scroll-mt-32">
-                <SectionHeading number="04" :title="t('players.sections.statistics')" />
+                <SectionHeading v-reveal number="04" :title="t('players.sections.statistics')" size="lg" />
 
                 <Tabs
                     v-if="seasonTabs.length > 1"
@@ -359,10 +368,10 @@ const goalBlocks = computed(() =>
 
                 <div v-if="season" class="mt-8 space-y-8">
                     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                        <StatTile :label="t('players.matches')" :value="season.matches_played" icon="calendar" />
-                        <StatTile :label="t('players.goals_scored')" :value="season.goals" icon="target" tone="accent" />
-                        <StatTile :label="t('players.assists')" :value="season.assists" icon="users" tone="accent" />
-                        <StatTile :label="t('players.minutes')" :value="season.minutes_played" icon="clock" />
+                        <StatTile v-reveal :label="t('players.matches')" :value="season.matches_played" icon="calendar" tone="figure" size="lg" animate />
+                        <StatTile v-reveal="80" :label="t('players.goals_scored')" :value="season.goals" icon="target" tone="figure" size="lg" animate />
+                        <StatTile v-reveal="160" :label="t('players.assists')" :value="season.assists" icon="users" tone="figure" size="lg" animate />
+                        <StatTile v-reveal="240" :label="t('players.minutes')" :value="season.minutes_played" icon="clock" tone="figure" size="lg" animate />
                     </div>
 
                     <div class="grid gap-6 lg:grid-cols-[1fr_1.6fr]">
@@ -392,17 +401,18 @@ const goalBlocks = computed(() =>
             </section>
 
             <section v-if="player.photos?.length" id="photos" class="scroll-mt-32">
-                <SectionHeading number="05" :title="t('players.sections.photos')" />
+                <SectionHeading v-reveal number="05" :title="t('players.sections.photos')" size="lg" />
                 <PhotoGallery :photos="player.photos" class="mt-8" :columns="3" />
             </section>
 
             <section v-if="goalBlocks.length || player.quote" id="goals" class="scroll-mt-32">
-                <SectionHeading number="06" :title="t('players.sections.goals')" />
+                <SectionHeading v-reveal number="06" :title="t('players.sections.goals')" size="lg" />
 
-                <div v-if="goalBlocks.length" class="mt-8 grid gap-6 lg:grid-cols-3">
+                <div v-if="goalBlocks.length" class="mt-10 grid gap-6 lg:grid-cols-3">
                     <div
                         v-for="(block, index) in goalBlocks"
                         :key="block.key"
+                        v-reveal="index * 90"
                         class="rounded-2xl border border-border bg-surface p-6"
                     >
                         <p class="text-xs font-semibold tabular-nums tracking-[0.2em] text-accent">
@@ -415,20 +425,25 @@ const goalBlocks = computed(() =>
 
                 <figure
                     v-if="player.quote"
-                    class="mt-10 rounded-2xl border border-accent/30 bg-accent-soft px-6 py-10 text-center sm:px-12"
+                    v-reveal
+                    class="mt-12 rounded-2xl border border-accent/30 bg-accent-soft px-6 py-14 text-center sm:px-12"
                 >
                     <Icon name="quote" :size="26" class="mx-auto text-accent" />
-                    <blockquote class="mt-5 text-xl font-medium leading-snug text-balance text-fg sm:text-2xl">
+                    <blockquote class="mx-auto mt-6 max-w-3xl font-semibold leading-[1.15] tracking-[-0.02em] text-balance text-fg text-[clamp(1.375rem,3vw,2.25rem)]">
                         “{{ player.quote }}”
                     </blockquote>
-                    <figcaption class="mt-4 text-sm text-fg-muted">— {{ player.full_name }}</figcaption>
+                    <figcaption class="mt-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-fg-muted">
+                        {{ player.full_name }}
+                    </figcaption>
                 </figure>
             </section>
 
             <section v-if="related.length">
-                <SectionHeading :title="t('home.meet_players')" />
-                <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    <PlayerCard v-for="item in related" :key="item.id" :player="item" />
+                <SectionHeading v-reveal :title="t('home.meet_players')" size="lg" />
+                <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <div v-for="(item, i) in related" :key="item.id" v-reveal="(i % 3) * 90">
+                        <PlayerCard :player="item" />
+                    </div>
                 </div>
             </section>
         </div>

@@ -28,6 +28,9 @@
     --accent-soft: #cd942c24;
     --accent-ring: #cd942c73;
 
+    --accent-2: oklch(0.87 0.045 240);
+    --accent-2-soft: oklch(0.87 0.045 240 / 0.14);
+
     --success: oklch(0.75 0.16 155);
     --success-soft: oklch(0.75 0.16 155 / 0.15);
     --warning: oklch(0.8 0.15 75);
@@ -64,6 +67,9 @@
     --accent-soft: #cd942c21;
     --accent-ring: #cd942c66;
 
+    --accent-2: oklch(0.46 0.075 250);
+    --accent-2-soft: oklch(0.46 0.075 250 / 0.1);
+
     --success: oklch(0.56 0.15 155);
     --success-soft: oklch(0.56 0.15 155 / 0.13);
     --warning: oklch(0.65 0.15 75);
@@ -83,6 +89,9 @@
         'Instrument Sans', 'Noto Sans Georgian', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
         'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+    --font-heading:
+        'Archivo', 'Noto Sans Georgian', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
     --color-bg: var(--bg);
     --color-bg-elevated: var(--bg-elevated);
     --color-surface: var(--surface);
@@ -101,6 +110,8 @@
     --color-accent-fg: var(--accent-fg);
     --color-accent-soft: var(--accent-soft);
     --color-accent-ring: var(--accent-ring);
+    --color-accent-2: var(--accent-2);
+    --color-accent-2-soft: var(--accent-2-soft);
 
     --color-success: var(--success);
     --color-success-soft: var(--success-soft);
@@ -129,6 +140,13 @@
         font-family: var(--font-sans);
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-family: var(--font-heading);
     }
 
     html.theme-ready body,
@@ -310,11 +328,125 @@
         height: 0;
         pointer-events: none;
     }
+
+    [data-reveal] {
+        opacity: 0;
+        transform: translate3d(0, var(--reveal-shift, 1.75rem), 0);
+        transition:
+            opacity 700ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+            transform 700ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+        will-change: opacity, transform;
+    }
+
+    [data-reveal='shown'] {
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+    }
+
+    .reveal-rule[data-reveal] {
+        opacity: 1;
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+    }
+
+    .reveal-rule[data-reveal='shown'] {
+        transform: scaleX(1);
+    }
+
+    .nav-slide {
+        transition:
+            transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+            width 420ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 200ms ease;
+    }
+
+    .nav-stagger {
+        animation: vx-nav-in 320ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+
+    @keyframes vx-nav-in {
+        from {
+            opacity: 0;
+            transform: translate3d(-0.5rem, 0, 0);
+        }
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    .marquee-track {
+        animation: vx-marquee var(--marquee-duration, 48s) linear infinite;
+    }
+
+    .marquee:hover .marquee-track,
+    .marquee:focus-within .marquee-track {
+        animation-play-state: paused;
+    }
+
+    @keyframes vx-marquee {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+        to {
+            transform: translate3d(-50%, 0, 0);
+        }
+    }
+
+    .sheen::after {
+        content: '';
+        position: absolute;
+        inset-block: -30%;
+        inline-size: 22%;
+        inset-inline-start: 0;
+        background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.28), transparent);
+        animation: vx-sheen 9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+        pointer-events: none;
+    }
+
+    @keyframes vx-sheen {
+        0%,
+        12% {
+            transform: translate3d(-160%, 0, 0) skewX(-14deg);
+        }
+        60%,
+        100% {
+            transform: translate3d(560%, 0, 0) skewX(-14deg);
+        }
+    }
 }
 
 @layer utilities {
     .text-balance {
         text-wrap: balance;
+    }
+    .texture-hatch {
+        background-image: repeating-linear-gradient(-45deg, var(--accent) 0 1px, transparent 1px 15px);
+        -webkit-mask-image: linear-gradient(to bottom, transparent, #000 45%, transparent);
+        mask-image: linear-gradient(to bottom, transparent, #000 45%, transparent);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        [data-reveal],
+        .reveal-rule[data-reveal] {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+        .marquee-track {
+            animation: none;
+        }
+        .nav-slide {
+            transition: opacity 200ms ease;
+        }
+        .nav-stagger {
+            animation: none;
+        }
+        .sheen::after {
+            animation: none;
+            opacity: 0;
+        }
     }
     .no-scrollbar::-webkit-scrollbar {
         display: none;

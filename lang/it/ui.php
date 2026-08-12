@@ -55,6 +55,13 @@ return [
         'meet_players' => 'I nostri giocatori',
         'meet_trainers' => 'I nostri allenatori',
         'discover' => 'Scopri di più',
+        'clubs_eyebrow' => 'Dove giocano i nostri atleti',
+        'stats_title' => 'In cifre',
+        'stats_lead' => 'La rosa che rappresentiamo oggi.',
+        'stats_players' => 'Giocatori rappresentati',
+        'stats_clubs' => 'Club',
+        'stats_countries' => 'Paesi',
+        'stats_trainers' => 'Staff tecnico',
     ],
 
     'players' => [

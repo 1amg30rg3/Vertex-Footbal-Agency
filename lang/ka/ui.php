@@ -55,6 +55,13 @@ return [
         'meet_players' => 'ჩვენი ფეხბურთელები',
         'meet_trainers' => 'ჩვენი მწვრთნელები',
         'discover' => 'გაიგე მეტი',
+        'clubs_eyebrow' => 'სად თამაშობენ ჩვენი ფეხბურთელები',
+        'stats_title' => 'ციფრებში',
+        'stats_lead' => 'შემადგენლობა, რომელსაც დღეს წარმოვადგენთ.',
+        'stats_players' => 'წარმოდგენილი ფეხბურთელი',
+        'stats_clubs' => 'კლუბი',
+        'stats_countries' => 'ქვეყანა',
+        'stats_trainers' => 'მწვრთნელი',
     ],
 
     'players' => [

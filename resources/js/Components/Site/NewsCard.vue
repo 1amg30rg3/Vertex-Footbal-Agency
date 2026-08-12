@@ -31,7 +31,7 @@ const date = computed(() =>
     <Link
         :href="href"
         :class="[
-            'group flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-accent/60',
+            'group flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-[border-color,translate] duration-300 hover:-translate-y-1 hover:border-accent/60',
             featured ? 'sm:flex-row' : '',
         ]"
     >

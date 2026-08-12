@@ -55,6 +55,13 @@ return [
         'meet_players' => 'Our players',
         'meet_trainers' => 'Our trainers',
         'discover' => 'Discover more',
+        'clubs_eyebrow' => 'Where our players compete',
+        'stats_title' => 'By the numbers',
+        'stats_lead' => 'The roster we represent today.',
+        'stats_players' => 'Players represented',
+        'stats_clubs' => 'Clubs',
+        'stats_countries' => 'Countries',
+        'stats_trainers' => 'Coaching staff',
     ],
 
     'players' => [

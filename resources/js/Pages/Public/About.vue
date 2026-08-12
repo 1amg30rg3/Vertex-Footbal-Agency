@@ -4,7 +4,7 @@ import { Head, usePage } from '@inertiajs/vue3';
 import { useI18n } from '@/Composables/useI18n';
 import { useRoute } from '@/Support/ziggy';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
-import SectionHeading from '@/Components/Site/SectionHeading.vue';
+import PageHero from '@/Components/Site/PageHero.vue';
 import Button from '@/Components/Ui/Button.vue';
 import Icon from '@/Components/Ui/Icon.vue';
 
@@ -27,48 +27,50 @@ const facts = computed(() => [
     </Head>
 
     <PublicLayout>
-        <section class="relative isolate overflow-hidden border-b border-border">
-            <div class="absolute inset-0 -z-10 bg-surface-2">
-                <div class="absolute inset-0 bg-gradient-to-t from-bg via-bg/80 to-bg/50" />
-                <div
-                    class="absolute inset-0 opacity-[0.12]"
-                    style="background: radial-gradient(50rem 28rem at 15% 10%, var(--accent), transparent 65%)"
-                />
-            </div>
-
-            <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-                <SectionHeading number="01" :title="t('about.title')" :lead="t('about.lead')" as="h1" />
-
-                <dl class="mt-10 flex flex-wrap gap-x-12 gap-y-6">
-                    <div v-for="fact in facts" :key="fact.label" class="flex items-start gap-3">
-                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
-                            <Icon :name="fact.icon" :size="16" />
-                        </span>
-                        <div>
-                            <dt class="text-[11px] font-semibold uppercase tracking-wide text-fg-subtle">
-                                {{ fact.label }}
-                            </dt>
-                            <dd class="mt-0.5 text-sm font-medium text-fg">{{ fact.value }}</dd>
-                        </div>
+        <PageHero :title="t('about.title')" :lead="t('about.lead')">
+            <dl class="flex flex-wrap gap-x-12 gap-y-6">
+                <div v-for="fact in facts" :key="fact.label" class="flex items-start gap-3">
+                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                        <Icon :name="fact.icon" :size="16" />
+                    </span>
+                    <div>
+                        <dt class="text-[11px] font-semibold uppercase tracking-[0.18em] text-fg-subtle">
+                            {{ fact.label }}
+                        </dt>
+                        <dd class="mt-1 text-sm font-medium text-fg">{{ fact.value }}</dd>
                     </div>
-                </dl>
-            </div>
-        </section>
+                </div>
+            </dl>
+        </PageHero>
 
-        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-            <div class="prose-content max-w-3xl text-base leading-relaxed sm:text-lg">
-                <p v-for="(paragraph, index) in paragraphs" :key="index">{{ paragraph }}</p>
+        <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+            <p
+                v-reveal
+                class="max-w-4xl text-balance text-xl font-medium leading-[1.35] tracking-[-0.015em] text-fg sm:text-2xl lg:text-[1.75rem]"
+            >
+                {{ paragraphs[0] }}
+            </p>
+
+            <div class="prose-content mt-8 max-w-3xl text-base leading-relaxed sm:text-lg">
+                <p v-for="(paragraph, index) in paragraphs.slice(1)" :key="index" v-reveal="index * 60">
+                    {{ paragraph }}
+                </p>
             </div>
 
-            <figure class="mt-14 rounded-2xl border border-accent/30 bg-accent-soft px-6 py-12 text-center sm:px-12">
+            <figure
+                v-reveal
+                class="mt-16 rounded-2xl border border-accent/30 bg-accent-soft px-6 py-14 text-center sm:px-12"
+            >
                 <Icon name="quote" :size="26" class="mx-auto text-accent" />
-                <blockquote class="mt-5 text-xl font-medium leading-snug text-balance text-fg sm:text-2xl">
+                <blockquote class="mx-auto mt-6 max-w-3xl font-semibold leading-[1.15] tracking-[-0.02em] text-balance text-fg text-[clamp(1.5rem,3.4vw,2.5rem)]">
                     {{ t('about.closing') }}
                 </blockquote>
-                <figcaption class="mt-4 text-sm text-fg-muted">— {{ site.name }}</figcaption>
+                <figcaption class="mt-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-fg-muted">
+                    {{ site.name }}
+                </figcaption>
             </figure>
 
-            <div class="mt-12 flex flex-wrap gap-3">
+            <div v-reveal class="mt-14 flex flex-wrap gap-3">
                 <Button :href="route('public.team')" size="lg" icon-right="arrowRight">
                     {{ t('nav.team') }}
                 </Button>

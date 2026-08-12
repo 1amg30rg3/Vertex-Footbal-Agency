@@ -16,7 +16,7 @@ const href = computed(() => route('public.trainers.show', { trainer: props.train
 <template>
     <Link
         :href="href"
-        class="group flex gap-4 rounded-2xl border border-border bg-surface p-4 transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-accent/60 sm:p-5"
+        class="group flex gap-4 rounded-2xl border border-border bg-surface p-4 transition-[border-color,translate] duration-300 hover:-translate-y-0.5 hover:border-accent/60 sm:p-5"
     >
         <div class="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-surface-2 sm:h-24 sm:w-24">
             <img

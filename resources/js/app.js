@@ -4,6 +4,7 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '@/Support/ziggy';
+import { reveal } from '@/Support/reveal';
 import { initTheme } from '@/Composables/useTheme';
 import { createI18n } from '@/Composables/useI18n';
 
@@ -20,6 +21,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(createI18n(props.initialPage.props))
+            .directive('reveal', reveal)
             .mount(el);
     },
     progress: {

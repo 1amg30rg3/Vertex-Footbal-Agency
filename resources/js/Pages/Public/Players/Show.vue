@@ -141,6 +141,36 @@ const contactLinks = computed(() => {
     ].filter(Boolean);
 });
 
+const linkIcons = {
+    'instagram.com': 'instagram',
+    'facebook.com': 'facebook',
+    'linkedin.com': 'linkedin',
+    'twitter.com': 'twitter',
+    'x.com': 'twitter',
+    'youtube.com': 'youtube',
+    'youtu.be': 'youtube',
+};
+
+const externalLinks = computed(() =>
+    (props.player.links ?? []).map((link) => {
+        let host = link.url;
+
+        try {
+            host = new URL(link.url).hostname.replace(/^www\./, '');
+        } catch {
+            host = link.url;
+        }
+
+        return {
+            id: link.id,
+            url: link.url,
+            host,
+            label: link.label || host,
+            icon: linkIcons[host] ?? 'link',
+        };
+    }),
+);
+
 const goalBlocks = computed(() =>
     [
         { key: 'short_term', label: t('players.short_term'), html: props.player.goals?.short_term },
@@ -260,24 +290,50 @@ const goalBlocks = computed(() =>
                         </div>
                     </dl>
 
-                    <div v-if="contactLinks.length" class="rounded-2xl border border-border bg-surface p-6">
-                        <h3 class="text-[11px] font-semibold uppercase tracking-wide text-fg-subtle">
-                            {{ t('players.contact') }}
-                        </h3>
-                        <ul class="mt-4 space-y-3">
-                            <li v-for="link in contactLinks" :key="link.label">
-                                <component
-                                    :is="link.href ? 'a' : 'span'"
-                                    :href="link.href || undefined"
-                                    :target="link.href?.startsWith('http') ? '_blank' : undefined"
-                                    :rel="link.href?.startsWith('http') ? 'noopener noreferrer' : undefined"
-                                    class="flex items-center gap-2.5 text-sm text-fg-muted transition-colors hover:text-accent"
-                                >
-                                    <Icon :name="link.icon" :size="15" class="text-fg-subtle" />
-                                    <span class="truncate">{{ link.label }}</span>
-                                </component>
-                            </li>
-                        </ul>
+                    <div class="space-y-6">
+                        <div v-if="contactLinks.length" class="rounded-2xl border border-border bg-surface p-6">
+                            <h3 class="text-[11px] font-semibold uppercase tracking-wide text-fg-subtle">
+                                {{ t('players.contact') }}
+                            </h3>
+                            <ul class="mt-4 space-y-3">
+                                <li v-for="link in contactLinks" :key="link.label">
+                                    <component
+                                        :is="link.href ? 'a' : 'span'"
+                                        :href="link.href || undefined"
+                                        :target="link.href?.startsWith('http') ? '_blank' : undefined"
+                                        :rel="link.href?.startsWith('http') ? 'noopener noreferrer' : undefined"
+                                        class="flex items-center gap-2.5 text-sm text-fg-muted transition-colors hover:text-accent"
+                                    >
+                                        <Icon :name="link.icon" :size="15" class="text-fg-subtle" />
+                                        <span class="truncate">{{ link.label }}</span>
+                                    </component>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div v-if="externalLinks.length" class="rounded-2xl border border-border bg-surface p-6">
+                            <h3 class="text-[11px] font-semibold uppercase tracking-wide text-fg-subtle">
+                                {{ t('players.links') }}
+                            </h3>
+                            <ul class="mt-4 space-y-2">
+                                <li v-for="link in externalLinks" :key="link.id">
+                                    <a
+                                        :href="link.url"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="group flex items-center gap-2.5 rounded-lg px-2 py-2 -mx-2 text-sm text-fg-muted transition-colors hover:bg-surface-2 hover:text-accent"
+                                    >
+                                        <Icon :name="link.icon" :size="15" class="text-fg-subtle transition-colors group-hover:text-accent" />
+                                        <span class="min-w-0 flex-1 truncate font-medium">{{ link.label }}</span>
+                                        <Icon
+                                            name="arrowUpRight"
+                                            :size="14"
+                                            class="shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
+                                        />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </section>

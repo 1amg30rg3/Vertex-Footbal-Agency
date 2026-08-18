@@ -88,6 +88,7 @@ return [
         'contract_until' => 'Contratto fino al',
         'city' => 'Città',
         'contact' => 'Contatti',
+        'links' => 'Link',
         'playing_style' => 'Stile di gioco',
         'strengths' => 'Punti di forza',
         'field_position' => 'Posizione in campo',
@@ -150,6 +151,7 @@ return [
         'related' => 'Articoli correlati',
         'back_to_news' => 'Torna alle notizie',
         'min_read' => ':count min di lettura',
+        'share' => 'Condividi',
     ],
 
     'about' => [

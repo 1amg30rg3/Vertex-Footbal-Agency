@@ -84,6 +84,11 @@ class Player extends Model
         return $this->hasMany(PlayerPhoto::class)->orderBy('sort_order');
     }
 
+    public function links(): HasMany
+    {
+        return $this->hasMany(PlayerLink::class)->orderBy('sort_order');
+    }
+
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', 'published');

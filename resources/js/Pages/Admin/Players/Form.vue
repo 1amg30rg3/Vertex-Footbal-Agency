@@ -82,6 +82,7 @@ const newSeason = () => ({
 });
 const newMonth = () => ({ _key: key(), id: null, month: 1, goals: 0, assists: 0 });
 const newPhoto = () => ({ _key: key(), id: null, path: null, url: null, caption: blankMap() });
+const newLink = () => ({ _key: key(), id: null, label: blankMap(), url: '' });
 
 function seasonTotal(season) {
     return (
@@ -306,6 +307,53 @@ const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 
                             </FormField>
                         </div>
                     </fieldset>
+
+                    <Repeater
+                        v-model="form.links"
+                        label="Links"
+                        hint="Profiles on other sites — Transfermarkt, Sofascore, Wyscout, highlight reels. Shown on the public profile."
+                        add-label="Add link"
+                        empty-label="No links yet."
+                        :new-row="newLink"
+                        :max="20"
+                    >
+                        <template #summary="{ row }">
+                            <span class="truncate text-sm text-fg-subtle">
+                                {{ row.label?.[defaultLocale] || row.url || 'New link' }}
+                            </span>
+                        </template>
+
+                        <template #default="{ row, index }">
+                            <div class="space-y-4">
+                                <FormField
+                                    label="URL"
+                                    :error="form.errors[`links.${index}.url`]"
+                                    required
+                                    v-slot="{ id, invalid }"
+                                >
+                                    <TextInput
+                                        :id="id"
+                                        v-model="row.url"
+                                        type="url"
+                                        icon="link"
+                                        :invalid="invalid"
+                                        placeholder="https://www.transfermarkt.com/..."
+                                    />
+                                </FormField>
+
+                                <LanguageTabs
+                                    v-model="row.label"
+                                    label="Label"
+                                    hint="Left empty, the public page falls back to the site's domain."
+                                    :name="`links.${index}.label`"
+                                    :errors="form.errors"
+                                    v-slot="{ locale }"
+                                >
+                                    <TextInput v-model="row.label[locale]" placeholder="Transfermarkt" />
+                                </LanguageTabs>
+                            </div>
+                        </template>
+                    </Repeater>
                 </FormSection>
 
                 <FormSection id="profile" number="02" title="Player profile">

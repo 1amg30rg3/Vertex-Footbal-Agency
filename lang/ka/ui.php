@@ -88,6 +88,7 @@ return [
         'contract_until' => 'კონტრაქტი',
         'city' => 'ქალაქი',
         'contact' => 'კონტაქტი',
+        'links' => 'ბმულები',
         'playing_style' => 'თამაშის სტილი',
         'strengths' => 'ძლიერი მხარეები',
         'field_position' => 'პოზიცია მოედანზე',
@@ -150,6 +151,7 @@ return [
         'related' => 'მსგავსი სტატიები',
         'back_to_news' => 'სიახლეებზე დაბრუნება',
         'min_read' => ':count წთ კითხვა',
+        'share' => 'გაზიარება',
     ],
 
     'about' => [

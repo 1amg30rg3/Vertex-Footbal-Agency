@@ -87,6 +87,10 @@ class PlayerRequest extends AdminFormRequest
                 'photos.*.id' => ['nullable', 'integer'],
                 'photos.*.path' => ['required'],
 
+                'links' => ['array', 'max:20'],
+                'links.*.id' => ['nullable', 'integer'],
+                'links.*.url' => ['required', 'url:http,https', 'max:2048'],
+
                 'status' => ['required', Rule::in(Player::STATUSES)],
                 'sort_order' => ['nullable', 'integer', 'min:0'],
                 'is_featured' => ['boolean'],
@@ -103,6 +107,7 @@ class PlayerRequest extends AdminFormRequest
             $this->nestedTranslatable('career.*.notes'),
             $this->nestedTranslatable('achievements.*.text'),
             $this->nestedTranslatable('photos.*.caption'),
+            $this->nestedTranslatable('links.*.label'),
         );
     }
 

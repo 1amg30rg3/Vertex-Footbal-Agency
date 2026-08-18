@@ -79,7 +79,7 @@ class PlayerController extends Controller
 
     public function edit(Player $player): Response
     {
-        $player->load(['skills', 'careerEntries', 'achievements', 'seasons.months', 'photos']);
+        $player->load(['skills', 'careerEntries', 'achievements', 'seasons.months', 'photos', 'links']);
 
         return Inertia::render('Admin/Players/Form', [
             'player' => $this->payload($player),
@@ -172,6 +172,7 @@ class PlayerController extends Controller
         $this->syncAchievements($player, $data['achievements'] ?? []);
         $this->syncSeasons($player, $data['seasons'] ?? []);
         $this->syncPhotos($player, $data['photos'] ?? []);
+        $this->syncLinks($player, $data['links'] ?? []);
 
         return $player;
     }
@@ -258,6 +259,15 @@ class PlayerController extends Controller
             ],
             mediaFields: ['path' => 'players/gallery'],
         );
+    }
+
+    protected function syncLinks(Player $player, array $rows): void
+    {
+        RepeaterSync::sync($player->links(), $rows, fn (array $row, int $index) => [
+            'label' => Locales::normalizeMap($row['label'] ?? []),
+            'url' => trim((string) $row['url']),
+            'sort_order' => $index,
+        ]);
     }
 
     protected function payload(Player $player): array
@@ -350,6 +360,12 @@ class PlayerController extends Controller
                 'url' => $photo::mediaUrl($photo->path),
                 'caption' => $this->map($photo, 'caption'),
             ])->values()->all(),
+
+            'links' => $player->links->map(fn ($link) => [
+                'id' => $link->id,
+                'label' => $this->map($link, 'label'),
+                'url' => $link->url,
+            ])->values()->all(),
         ];
     }
 
@@ -390,6 +406,7 @@ class PlayerController extends Controller
             'achievements' => [],
             'seasons' => [],
             'photos' => [],
+            'links' => [],
         ];
     }
 

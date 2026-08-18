@@ -88,6 +88,7 @@ return [
         'contract_until' => 'Контракт до',
         'city' => 'Город',
         'contact' => 'Контакты',
+        'links' => 'Ссылки',
         'playing_style' => 'Стиль игры',
         'strengths' => 'Сильные стороны',
         'field_position' => 'Позиция на поле',
@@ -150,6 +151,7 @@ return [
         'related' => 'Похожие статьи',
         'back_to_news' => 'Вернуться к новостям',
         'min_read' => ':count мин чтения',
+        'share' => 'Поделиться',
     ],
 
     'about' => [

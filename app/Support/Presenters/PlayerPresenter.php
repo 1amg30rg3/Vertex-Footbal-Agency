@@ -98,6 +98,12 @@ class PlayerPresenter extends Presenter
                 'caption' => $this->t($photo, 'caption'),
             ])->values()->all(),
 
+            'links' => $player->links->map(fn ($link) => [
+                'id' => $link->id,
+                'label' => $this->t($link, 'label'),
+                'url' => $link->url,
+            ])->values()->all(),
+
             'goals' => array_filter([
                 'short_term' => $this->t($player, 'goals_short_term'),
                 'mid_term' => $this->t($player, 'goals_mid_term'),

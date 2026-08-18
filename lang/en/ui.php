@@ -88,6 +88,7 @@ return [
         'contract_until' => 'Contract until',
         'city' => 'City',
         'contact' => 'Contact',
+        'links' => 'Links',
         'playing_style' => 'Playing style',
         'strengths' => 'Strengths',
         'field_position' => 'Position on the pitch',
@@ -150,6 +151,7 @@ return [
         'related' => 'Related articles',
         'back_to_news' => 'Back to news',
         'min_read' => ':count min read',
+        'share' => 'Share',
     ],
 
     'about' => [

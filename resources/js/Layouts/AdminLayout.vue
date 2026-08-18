@@ -94,18 +94,13 @@ function logout() {
     <div class="min-h-screen bg-bg">
         <aside
             :class="[
-                'fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-border bg-bg-elevated transition-transform duration-200 lg:translate-x-0',
+                'fixed inset-y-0 left-0 z-50 flex w-56 flex-col border-r border-border bg-bg-elevated transition-transform duration-200 lg:translate-x-0',
                 sidebarOpen ? 'translate-x-0' : '-translate-x-full',
             ]"
         >
             <div class="flex h-16 shrink-0 items-center gap-3 border-b border-border px-5">
                 <img v-if="site.logo" :src="site.logo" :alt="site.name" class="h-8 w-auto shrink-0">
                 <Logo v-else variant="mark" :title="site.name" class="h-8 w-8 shrink-0" />
-
-                <div class="min-w-0">
-                    <p class="truncate text-sm font-semibold tracking-tight text-fg">{{ site.name }}</p>
-                    <p class="text-[10px] uppercase tracking-wider text-fg-subtle">Admin panel</p>
-                </div>
 
                 <button
                     type="button"
@@ -181,9 +176,9 @@ function logout() {
             @click="sidebarOpen = false"
         />
 
-        <div class="lg:pl-64">
+        <div class="lg:pl-56">
             <header class="sticky top-0 z-30 border-b border-border bg-bg/85 backdrop-blur-lg">
-                <div class="flex min-h-16 flex-wrap items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
+                <div class="flex min-h-16 flex-wrap items-center gap-3 px-4 py-3 sm:px-6 lg:h-16 lg:flex-nowrap lg:px-8 lg:py-0">
                     <button
                         type="button"
                         class="rounded-lg border border-border p-2 text-fg-muted transition-colors hover:text-fg lg:hidden"

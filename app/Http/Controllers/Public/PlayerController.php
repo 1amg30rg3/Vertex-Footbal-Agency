@@ -43,7 +43,7 @@ class PlayerController extends Controller
     {
         abort_unless($player->status === 'published', 404);
 
-        $player->load(['skills', 'careerEntries', 'achievements', 'seasons.months', 'photos']);
+        $player->load(['skills', 'careerEntries', 'achievements', 'seasons.months', 'photos', 'links']);
 
         $presenter = PlayerPresenter::make();
 

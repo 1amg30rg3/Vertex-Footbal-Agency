@@ -1,0 +1,18 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Never serve dotfiles (.env, .git, .gitignore, ...)
+    RewriteRule ^\. - [F,L]
+
+    # Never serve project metadata or database dumps
+    RewriteRule ^(composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|vite\.config\.js|README\.md|.*\.sql)$ - [F,L]
+
+    # Never serve application directories
+    RewriteRule ^(app|bootstrap|config|database|lang|node_modules|resources|routes|storage|tests|vendor)(/|$) - [F,L]
+
+    # Route everything else into Laravel's public directory.
+    # The (?!public/) guard stops the rewrite re-applying on Apache's second pass.
+    RewriteRule ^(?!public/)(.*)$ public/$1 [L]
+</IfModule>

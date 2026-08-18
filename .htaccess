@@ -1,4 +1,4 @@
-Options -Indexes
+Options -Indexes +FollowSymLinks
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -8,6 +8,13 @@ Options -Indexes
 
     # Never serve project metadata or database dumps
     RewriteRule ^(composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|vite\.config\.js|README\.md|.*\.sql)$ - [F,L]
+
+    # Admin-uploaded media lives at the /storage URL, which collides with the
+    # real storage/ directory blocked below. Map it into public/storage (the
+    # storage:link symlink -> storage/app/public) BEFORE that deny rule, so
+    # only the public disk is ever reachable; storage/logs, storage/framework
+    # and app/private have no path here because they live outside app/public.
+    RewriteRule ^storage/(.*)$ public/storage/$1 [L]
 
     # Never serve application directories
     RewriteRule ^(app|bootstrap|config|database|lang|node_modules|resources|routes|storage|tests|vendor)(/|$) - [F,L]

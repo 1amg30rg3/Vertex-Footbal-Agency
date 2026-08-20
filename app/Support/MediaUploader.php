@@ -19,7 +19,16 @@ class MediaUploader
         'image/svg+xml' => 'svg',
     ];
 
-    public static function store(mixed $value, string $folder, ?string $replacing = null): ?string
+    public const MAX_VIDEO_BYTES = 100 * 1024 * 1024;
+
+    /** @var array<string, string> mime => extension */
+    public const ALLOWED_VIDEO = [
+        'video/mp4' => 'mp4',
+        'video/webm' => 'webm',
+        'video/quicktime' => 'mov',
+    ];
+
+    public static function store(mixed $value, string $folder, ?string $replacing = null, bool $video = false): ?string
     {
         if ($value === null || $value === '' || $value === false) {
             static::forget($replacing);
@@ -28,28 +37,40 @@ class MediaUploader
         }
 
         if ($value instanceof UploadedFile) {
-            $path = static::storeUploadedFile($value, $folder);
+            $path = static::storeUploadedFile($value, $folder, $video);
             static::forgetIfChanged($replacing, $path);
 
             return $path;
         }
 
         if (is_string($value) && Str::startsWith($value, 'data:')) {
-            $path = static::storeDataUri($value, $folder);
+            $path = static::storeDataUri($value, $folder, $video);
             static::forgetIfChanged($replacing, $path);
 
             return $path;
         }
 
-        return is_string($value) ? $value : $replacing;
+        if (is_string($value)) {
+            static::forgetIfChanged($replacing, $value);
+
+            return $value;
+        }
+
+        return $replacing;
     }
 
-    protected static function storeUploadedFile(UploadedFile $file, string $folder): string
+    protected static function storeUploadedFile(UploadedFile $file, string $folder, bool $video = false): string
     {
-        $extension = static::ALLOWED[$file->getMimeType()] ?? null;
+        $mime = (string) $file->getMimeType();
+        $allowed = $video ? static::ALLOWED + static::ALLOWED_VIDEO : static::ALLOWED;
+        $extension = $allowed[$mime] ?? null;
 
-        abort_if($extension === null, 422, 'Unsupported image type.');
-        abort_if($file->getSize() > static::MAX_BYTES, 422, 'Image is too large.');
+        abort_if($extension === null, 422, $video ? 'Unsupported image or video type.' : 'Unsupported image type.');
+
+        $isVideo = isset(static::ALLOWED_VIDEO[$mime]);
+        $limit = $isVideo ? static::MAX_VIDEO_BYTES : static::MAX_BYTES;
+
+        abort_if($file->getSize() > $limit, 422, $isVideo ? 'Video is too large.' : 'Image is too large.');
 
         return $file->storeAs(
             trim($folder, '/'),
@@ -58,22 +79,30 @@ class MediaUploader
         );
     }
 
-    protected static function storeDataUri(string $value, string $folder): ?string
+    protected static function storeDataUri(string $value, string $folder, bool $video = false): ?string
     {
         if (! preg_match('#^data:(?<mime>[a-z0-9.+/-]+);base64,(?<data>.+)$#is', $value, $matches)) {
             return null;
         }
 
         $mime = strtolower($matches['mime']);
-        $extension = static::ALLOWED[$mime] ?? null;
+        $allowed = $video ? static::ALLOWED + static::ALLOWED_VIDEO : static::ALLOWED;
+        $extension = $allowed[$mime] ?? null;
 
-        abort_if($extension === null, 422, 'Unsupported image type.');
+        abort_if($extension === null, 422, $video ? 'Unsupported image or video type.' : 'Unsupported image type.');
 
         $binary = base64_decode($matches['data'], true);
 
-        abort_if($binary === false, 422, 'Malformed image payload.');
-        abort_if(strlen($binary) > static::MAX_BYTES, 422, 'Image is too large.');
-        abort_unless(static::looksLikeImage($binary, $mime), 422, 'File contents are not a valid image.');
+        abort_if($binary === false, 422, 'Malformed media payload.');
+
+        $isVideo = isset(static::ALLOWED_VIDEO[$mime]);
+
+        abort_if(strlen($binary) > ($isVideo ? static::MAX_VIDEO_BYTES : static::MAX_BYTES), 422, $isVideo ? 'Video is too large.' : 'Image is too large.');
+        abort_unless(
+            $isVideo ? static::looksLikeVideo($binary, $mime) : static::looksLikeImage($binary, $mime),
+            422,
+            'File contents do not match the declared type.'
+        );
 
         $path = trim($folder, '/').'/'.static::filename($extension);
 
@@ -91,6 +120,15 @@ class MediaUploader
             'image/webp' => str_starts_with($binary, 'RIFF') && substr($binary, 8, 4) === 'WEBP',
             'image/svg+xml' => str_contains($binary, '<svg')
                 && ! preg_match('/<script|on[a-z]+\s*=|javascript:/i', $binary),
+            default => false,
+        };
+    }
+
+    protected static function looksLikeVideo(string $binary, string $mime): bool
+    {
+        return match ($mime) {
+            'video/mp4', 'video/quicktime' => substr($binary, 4, 4) === 'ftyp',
+            'video/webm' => str_starts_with($binary, "\x1A\x45\xDF\xA3"),
             default => false,
         };
     }

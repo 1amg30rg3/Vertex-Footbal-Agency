@@ -12,7 +12,8 @@ class RepeaterSync
      * @param  HasMany  $relation  the relation to reconcile
      * @param  array<int, array<string, mixed>>  $rows  the submitted payload, in display order
      * @param  callable(array, int, ?Model): array  $map  row payload => model attributes
-     * @param  array<string, string>  $mediaFields  attribute => storage folder
+     * @param  array<string, string|array{folder: string, video?: bool}>  $mediaFields
+     *        attribute => storage folder, or a config array to also accept video
      * @return Collection<int, Model> the persisted models, in order
      */
     public static function sync(
@@ -33,15 +34,16 @@ class RepeaterSync
 
             $attributes = $map($row, $index, $model);
 
-            foreach ($mediaFields as $attribute => $folder) {
+            foreach ($mediaFields as $attribute => $config) {
                 if (! array_key_exists($attribute, $row)) {
                     continue;
                 }
 
                 $attributes[$attribute] = MediaUploader::store(
                     $row[$attribute],
-                    $folder,
+                    is_array($config) ? $config['folder'] : $config,
                     $model?->getAttribute($attribute),
+                    is_array($config) && ($config['video'] ?? false),
                 );
             }
 

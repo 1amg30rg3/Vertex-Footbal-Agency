@@ -198,14 +198,15 @@ function clear() {
         <input ref="input" type="file" accept="image/*" class="hidden" @change="onFile">
 
         <Modal :open="cropModal" title="Crop image" size="xl" @close="closeCrop">
-            <div class="overflow-hidden rounded-xl bg-surface-3" style="max-height: 60vh">
+            <div class="overflow-hidden rounded-xl bg-surface-3">
                 <Cropper
                     v-if="sourceImage"
                     ref="cropperRef"
                     :src="sourceImage"
                     :stencil-props="aspectRatio ? { aspectRatio } : {}"
                     :stencil-component="shape === 'circle' ? CircleStencil : undefined"
-                    class="max-h-[60vh]"
+                    image-restriction="fit-area"
+                    class="h-[60vh] max-h-[620px] min-h-[320px] w-full"
                 />
             </div>
 

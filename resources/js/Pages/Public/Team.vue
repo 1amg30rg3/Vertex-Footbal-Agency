@@ -21,10 +21,10 @@ const { t } = useI18n();
     <PublicLayout>
         <PageHero :title="t('team.title')" :lead="t('team.lead')" />
 
-        <div class="mx-auto max-w-7xl px-4 py-16 pb-24 sm:px-6 lg:px-8 lg:py-24 lg:pb-32">
-            <div v-if="members.length" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                <div v-for="(member, i) in members" :key="member.id" v-reveal="(i % 4) * 80">
-                    <TeamMemberCard :member="member" class="h-full" />
+        <div class="mx-auto max-w-6xl px-4 py-16 pb-24 sm:px-6 lg:px-8 lg:py-24 lg:pb-32">
+            <div v-if="members.length" class="grid items-start gap-6 md:grid-cols-2 lg:gap-8">
+                <div v-for="(member, i) in members" :key="member.id" v-reveal="(i % 2) * 90">
+                    <TeamMemberCard :member="member" />
                 </div>
             </div>
 

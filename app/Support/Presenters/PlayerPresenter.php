@@ -4,6 +4,7 @@ namespace App\Support\Presenters;
 
 use App\Models\Player;
 use App\Models\PlayerSeason;
+use App\Support\PlayerMedia;
 use App\Support\RichText;
 use Illuminate\Database\Eloquent\Model;
 
@@ -95,6 +96,9 @@ class PlayerPresenter extends Presenter
             'photos' => $player->photos->map(fn ($photo) => [
                 'id' => $photo->id,
                 'url' => $photo::mediaUrl($photo->path),
+                'kind' => PlayerMedia::kind($photo->path),
+                'embed_url' => PlayerMedia::embedUrl($photo->path),
+                'poster' => PlayerMedia::posterUrl($photo->path),
                 'caption' => $this->t($photo, 'caption'),
             ])->values()->all(),
 

@@ -73,7 +73,7 @@ return [
             'profile' => 'Player profile',
             'career' => 'Career',
             'statistics' => 'Season statistics',
-            'photos' => 'Match photos',
+            'photos' => 'Match photos & videos',
             'goals' => 'Goals',
         ],
         'date_of_birth' => 'Date of birth',
@@ -137,7 +137,7 @@ return [
 
     'team' => [
         'title' => 'Agency team',
-        'lead' => 'The people who make it happen.',
+        'lead' => 'More than representation. A team for your development.',
         'empty' => 'No team members have been published yet.',
     ],
 
@@ -156,7 +156,7 @@ return [
 
     'about' => [
         'title' => 'About Us',
-        'lead' => 'Founded on a lifelong passion for football and a belief that talent alone is never enough.',
+        'lead' => 'We create an environment where talent develops, potential is realized, and careers are built the right way.',
         'founded_label' => 'Founded',
         'founded_value' => '12 August 2026',
         'founder_label' => 'Founder',

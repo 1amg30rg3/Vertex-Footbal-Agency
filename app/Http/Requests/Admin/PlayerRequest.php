@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\Player;
+use App\Support\PlayerMedia;
 use App\Support\Locales;
 use Illuminate\Validation\Rule;
 
@@ -85,7 +86,11 @@ class PlayerRequest extends AdminFormRequest
 
                 'photos' => ['array', 'max:60'],
                 'photos.*.id' => ['nullable', 'integer'],
-                'photos.*.path' => ['required'],
+                'photos.*.path' => ['required', function (string $attribute, mixed $value, \Closure $fail) {
+                    if (PlayerMedia::isExternal($value) && PlayerMedia::kind($value) === null) {
+                        $fail('Paste a YouTube or Vimeo link, or a direct link to a video file.');
+                    }
+                }],
 
                 'links' => ['array', 'max:20'],
                 'links.*.id' => ['nullable', 'integer'],

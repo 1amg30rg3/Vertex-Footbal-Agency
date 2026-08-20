@@ -22,6 +22,10 @@ const gridClass = computed(
         })[props.columns] ?? 'grid-cols-2 sm:grid-cols-3',
 );
 
+const isVideo = (item) => item?.kind === 'video';
+const isEmbed = (item) => item?.kind === 'embed';
+const isPlayable = (item) => isVideo(item) || isEmbed(item);
+
 function open(index) {
     openIndex.value = index;
 }
@@ -67,12 +71,31 @@ onBeforeUnmount(() => {
                     class="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl border border-border bg-surface-2"
                     @click="open(index)"
                 >
-                    <img
+                    <video
+                        v-if="isVideo(photo) && !photo.poster"
                         :src="photo.url"
+                        preload="metadata"
+                        muted
+                        playsinline
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <img
+                        v-else-if="photo.poster || photo.url"
+                        :src="photo.poster || photo.url"
                         :alt="photo.caption || ''"
                         loading="lazy"
                         class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     >
+
+                    <span
+                        v-if="isPlayable(photo)"
+                        class="absolute inset-0 flex items-center justify-center"
+                    >
+                        <span class="flex h-12 w-12 items-center justify-center rounded-full bg-black/55 text-white ring-1 ring-white/25 transition-transform duration-300 group-hover:scale-110">
+                            <Icon name="chevronRight" :size="22" />
+                        </span>
+                    </span>
+
                     <span
                         v-if="photo.caption"
                         class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-3 text-left text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100"
@@ -114,8 +137,26 @@ onBeforeUnmount(() => {
                         <span class="sr-only">Previous</span>
                     </button>
 
-                    <figure class="max-h-full max-w-5xl" @click.stop>
-                        <img :src="current.url" :alt="current.caption || ''" class="max-h-[80vh] w-auto rounded-xl object-contain">
+                    <figure class="max-h-full w-full max-w-5xl" @click.stop>
+                        <iframe
+                            v-if="isEmbed(current)"
+                            :key="openIndex"
+                            :src="current.embed_url"
+                            class="aspect-video max-h-[80vh] w-full rounded-xl border-0 bg-black"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            :title="current.caption || 'Video'"
+                        />
+                        <video
+                            v-else-if="isVideo(current)"
+                            :key="openIndex"
+                            :src="current.url"
+                            controls
+                            autoplay
+                            playsinline
+                            class="max-h-[80vh] w-full rounded-xl bg-black object-contain"
+                        />
+                        <img v-else :src="current.url" :alt="current.caption || ''" class="max-h-[80vh] w-auto rounded-xl object-contain">
                         <figcaption v-if="current.caption" class="mt-3 text-center text-sm text-white/75">
                             {{ current.caption }}
                         </figcaption>

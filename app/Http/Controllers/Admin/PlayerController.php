@@ -10,6 +10,7 @@ use App\Models\Player;
 use App\Models\PlayerSeason;
 use App\Support\Locales;
 use App\Support\MediaUploader;
+use App\Support\PlayerMedia;
 use App\Support\RepeaterSync;
 use App\Support\RichText;
 use Illuminate\Http\RedirectResponse;
@@ -257,7 +258,7 @@ class PlayerController extends Controller
                 'caption' => Locales::normalizeMap($row['caption'] ?? []),
                 'sort_order' => $index,
             ],
-            mediaFields: ['path' => 'players/gallery'],
+            mediaFields: ['path' => ['folder' => 'players/gallery', 'video' => true]],
         );
     }
 
@@ -358,6 +359,8 @@ class PlayerController extends Controller
                 'id' => $photo->id,
                 'path' => $photo->path,
                 'url' => $photo::mediaUrl($photo->path),
+                'kind' => PlayerMedia::kind($photo->path),
+                'poster' => PlayerMedia::posterUrl($photo->path),
                 'caption' => $this->map($photo, 'caption'),
             ])->values()->all(),
 

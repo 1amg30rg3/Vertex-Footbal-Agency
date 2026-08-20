@@ -73,7 +73,7 @@ return [
             'profile' => 'Profilo del giocatore',
             'career' => 'Carriera',
             'statistics' => 'Statistiche stagionali',
-            'photos' => 'Foto delle partite',
+            'photos' => 'Foto e video delle partite',
             'goals' => 'Obiettivi',
         ],
         'date_of_birth' => 'Data di nascita',
@@ -137,7 +137,7 @@ return [
 
     'team' => [
         'title' => "Team dell'agenzia",
-        'lead' => 'Le persone che rendono tutto possibile.',
+        'lead' => 'Più che rappresentanza. Una squadra per la tua crescita.',
         'empty' => 'Nessun membro del team è stato ancora pubblicato.',
     ],
 
@@ -156,7 +156,7 @@ return [
 
     'about' => [
         'title' => 'Chi siamo',
-        'lead' => 'Nata da una passione di sempre per il calcio e dalla convinzione che il talento da solo non basti mai.',
+        'lead' => 'Creiamo un ambiente in cui il talento cresce, il potenziale si realizza e le carriere si costruiscono nel modo giusto.',
         'founded_label' => 'Fondata',
         'founded_value' => '12 agosto 2026',
         'founder_label' => 'Fondatore',

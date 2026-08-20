@@ -15,6 +15,7 @@ import CheckboxInput from '@/Components/Form/CheckboxInput.vue';
 import ToggleSwitch from '@/Components/Form/ToggleSwitch.vue';
 import RichTextEditor from '@/Components/Form/RichTextEditor.vue';
 import ImageUploader from '@/Components/Form/ImageUploader.vue';
+import GalleryMediaInput from '@/Components/Form/GalleryMediaInput.vue';
 import Repeater from '@/Components/Form/Repeater.vue';
 import PitchPositionMarker from '@/Components/Viz/PitchPositionMarker.vue';
 import Button from '@/Components/Ui/Button.vue';
@@ -43,7 +44,7 @@ const sections = [
     { id: 'profile', number: '02', label: 'Player profile' },
     { id: 'career', number: '03', label: 'Career' },
     { id: 'statistics', number: '04', label: 'Statistics' },
-    { id: 'photos', number: '05', label: 'Photos' },
+    { id: 'photos', number: '05', label: 'Photos & videos' },
     { id: 'goals', number: '06', label: 'Goals' },
     { id: 'meta', number: '07', label: 'Publishing & SEO' },
 ];
@@ -81,7 +82,7 @@ const newSeason = () => ({
     months: [],
 });
 const newMonth = () => ({ _key: key(), id: null, month: 1, goals: 0, assists: 0 });
-const newPhoto = () => ({ _key: key(), id: null, path: null, url: null, caption: blankMap() });
+const newPhoto = () => ({ _key: key(), id: null, path: null, url: null, kind: null, caption: blankMap() });
 const newLink = () => ({ _key: key(), id: null, label: blankMap(), url: '' });
 
 function seasonTotal(season) {
@@ -673,27 +674,26 @@ const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 
                     </Repeater>
                 </FormSection>
 
-                <FormSection id="photos" number="05" title="Match photos">
+                <FormSection id="photos" number="05" title="Match photos & videos">
                     <Repeater
                         v-model="form.photos"
-                        add-label="Add photo"
-                        empty-label="No photos yet."
+                        add-label="Add photo or video"
+                        empty-label="No photos or videos yet."
                         :new-row="newPhoto"
                         :max="60"
                     >
                         <template #summary="{ row }">
                             <span class="truncate text-sm text-fg-muted">
-                                {{ row.caption?.[defaultLocale] || 'Photo' }}
+                                {{ row.caption?.[defaultLocale] || 'Media' }}
                             </span>
                         </template>
 
                         <template #default="{ row, index }">
                             <div class="grid gap-4 sm:grid-cols-[12rem_1fr]">
-                                <ImageUploader
+                                <GalleryMediaInput
                                     v-model="row.path"
                                     :preview-url="row.url"
-                                    :aspect-ratio="4 / 3"
-                                    height="h-32"
+                                    :kind="row.kind"
                                     :error="form.errors[`photos.${index}.path`]"
                                 />
 

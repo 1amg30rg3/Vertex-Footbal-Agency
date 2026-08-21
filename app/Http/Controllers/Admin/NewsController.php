@@ -145,6 +145,7 @@ class NewsController extends Controller
             'featured_order' => $data['featured_order'] ?? 0,
             'seo_title' => $data['seo_title'] ?? Locales::blankMap(),
             'seo_description' => $data['seo_description'] ?? Locales::blankMap(),
+            'external_url' => trim((string) ($data['external_url'] ?? '')) ?: null,
             'cover_path' => MediaUploader::store($data['cover_path'] ?? null, 'news/covers', $article->cover_path),
         ])->save();
 
@@ -162,6 +163,7 @@ class NewsController extends Controller
             'body' => $this->map($article, 'body'),
             'cover_path' => $article->cover_path,
             'cover_url' => News::mediaUrl($article->cover_path),
+            'external_url' => $article->external_url,
             'status' => $article->status,
             'published_at' => $article->published_at?->format('Y-m-d\TH:i'),
             'is_featured' => $article->is_featured,
@@ -183,6 +185,7 @@ class NewsController extends Controller
             'excerpt' => Locales::blankMap(''),
             'body' => Locales::blankMap(''),
             'cover_path' => null, 'cover_url' => null,
+            'external_url' => '',
             'status' => 'draft',
             'published_at' => null,
             'is_featured' => false,

@@ -5,12 +5,9 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '@/Support/ziggy';
 import { reveal } from '@/Support/reveal';
-import { initTheme } from '@/Composables/useTheme';
 import { createI18n } from '@/Composables/useI18n';
 
 const appName = import.meta.env.VITE_APP_NAME || 'VERTEX Football Agency';
-
-initTheme();
 
 createInertiaApp({
     title: (title) => (title ? `${title} — ${appName}` : appName),

@@ -18,6 +18,7 @@ class NewsPresenter extends Presenter
             'excerpt' => $this->t($article, 'excerpt')
                 ?: RichText::excerpt($this->t($article, 'body'), 150),
             'cover' => News::mediaUrl($article->cover_path),
+            'external_url' => $article->external_url ?: null,
             'published_at' => $article->published_at?->toIso8601String(),
             'published_date' => $this->date($article->published_at),
             'is_featured' => $article->is_featured,

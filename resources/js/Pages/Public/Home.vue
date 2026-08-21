@@ -288,7 +288,6 @@ const wordmark = computed(() => (site.value.name ?? 'VERTEX').split(' ')[0]);
                         <Link
                             v-for="(action, i) in [
                                 { href: route('public.contacts'), label: t('nav.contacts'), lead: t('contacts.lead') },
-                                { href: route('public.team'), label: t('nav.team'), lead: t('team.lead') },
                             ]"
                             :key="i"
                             :href="action.href"

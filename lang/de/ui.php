@@ -66,7 +66,7 @@ return [
 
     'players' => [
         'title' => 'Spieler',
-        'lead' => 'Die Athleten, die wir vertreten.',
+        'lead' => 'Die Fußballer, die wir vertreten.',
         'empty' => 'Es wurden noch keine Spieler veröffentlicht.',
         'sections' => [
             'personal' => 'Persönliche Daten',
@@ -190,7 +190,6 @@ return [
 
     'footer' => [
         'tagline' => 'Mehr als Beratung.',
-        'quick_links' => 'Schnellzugriff',
         'contact' => 'Kontakt',
         'rights' => 'Alle Rechte vorbehalten.',
     ],

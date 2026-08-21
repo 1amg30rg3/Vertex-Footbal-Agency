@@ -1,7 +1,6 @@
 <script setup>
 import { computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
-import ThemeToggle from '@/Components/Ui/ThemeToggle.vue';
 import Logo from '@/Components/Site/Logo.vue';
 
 defineProps({
@@ -21,7 +20,6 @@ const site = computed(() => page.props.site ?? {});
         />
 
         <div class="absolute right-4 top-4 sm:right-6 sm:top-6">
-            <ThemeToggle />
         </div>
 
         <div class="relative w-full max-w-sm">

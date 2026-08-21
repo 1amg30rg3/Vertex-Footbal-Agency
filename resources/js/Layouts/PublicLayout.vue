@@ -4,7 +4,6 @@ import { Link, router, usePage } from '@inertiajs/vue3';
 import { useI18n } from '@/Composables/useI18n';
 import { useRoute } from '@/Support/ziggy';
 import Icon from '@/Components/Ui/Icon.vue';
-import ThemeToggle from '@/Components/Ui/ThemeToggle.vue';
 import LocaleSwitcher from '@/Components/Ui/LocaleSwitcher.vue';
 import Alert from '@/Components/Ui/Alert.vue';
 import Logo from '@/Components/Site/Logo.vue';
@@ -240,7 +239,6 @@ const year = new Date().getFullYear();
                     <span class="mr-1 hidden h-6 w-px bg-border xl:block" aria-hidden="true" />
 
                     <LocaleSwitcher />
-                    <ThemeToggle />
 
                     <button
                         type="button"
@@ -378,7 +376,7 @@ const year = new Date().getFullYear();
 
         <footer class="border-t border-border bg-bg-elevated">
             <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-                <div class="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
+                <div class="grid gap-10 md:grid-cols-[1fr_auto]">
                     <div>
                         <Link :href="route('public.home')" class="flex items-center" :aria-label="site.name">
                             <img v-if="site.logo" :src="site.logo" :alt="site.name" class="h-10 w-auto">
@@ -402,19 +400,6 @@ const year = new Date().getFullYear();
                                 <Icon :name="socialIcons[link.platform] ?? 'link'" :size="16" />
                             </a>
                         </div>
-                    </div>
-
-                    <div>
-                        <h2 class="text-xs font-semibold uppercase tracking-wider text-fg-subtle">
-                            {{ t('footer.quick_links') }}
-                        </h2>
-                        <ul class="mt-4 space-y-2.5">
-                            <li v-for="item in nav.slice(1)" :key="item.name">
-                                <Link :href="item.href" class="text-sm text-fg-muted transition-colors hover:text-accent">
-                                    {{ item.label }}
-                                </Link>
-                            </li>
-                        </ul>
                     </div>
 
                     <div>

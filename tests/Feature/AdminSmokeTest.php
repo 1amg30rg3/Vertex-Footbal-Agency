@@ -205,15 +205,6 @@ class AdminSmokeTest extends TestCase
             ->assertForbidden();
     }
 
-    public function test_theme_preference_is_persisted(): void
-    {
-        $this->actingAs($this->admin)
-            ->patch(route('admin.preferences.theme'), ['theme' => 'light'])
-            ->assertRedirect();
-
-        $this->assertSame('light', $this->admin->fresh()->theme);
-    }
-
     public function test_contact_form_stores_a_message_and_blocks_the_honeypot(): void
     {
         $this->post(route('public.contacts.store', ['locale' => 'ka']), [

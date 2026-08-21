@@ -66,7 +66,7 @@ return [
 
     'players' => [
         'title' => 'Players',
-        'lead' => 'The athletes we represent.',
+        'lead' => 'The Footballers we represent',
         'empty' => 'No players have been published yet.',
         'sections' => [
             'personal' => 'Personal data',
@@ -190,7 +190,6 @@ return [
 
     'footer' => [
         'tagline' => 'More Than Representation. A Team Built for Your Highest Potential.',
-        'quick_links' => 'Quick links',
         'contact' => 'Contact',
         'rights' => 'All rights reserved.',
     ],

@@ -5,47 +5,7 @@
 @source '../js/**/*.vue';
 @source '../js/**/*.js';
 
-:root,
-:root[data-theme='dark'] {
-    color-scheme: dark;
-
-    --bg: oklch(0.16 0.006 285);
-    --bg-elevated: oklch(0.19 0.007 285);
-    --surface: oklch(0.21 0.008 285);
-    --surface-2: oklch(0.25 0.009 285);
-    --surface-3: oklch(0.3 0.01 285);
-
-    --fg: oklch(0.97 0.002 285);
-    --fg-muted: oklch(0.72 0.012 285);
-    --fg-subtle: oklch(0.58 0.012 285);
-
-    --border: oklch(0.31 0.01 285);
-    --border-strong: oklch(0.42 0.014 285);
-
-    --accent: #cd942c;
-    --accent-hover: #dea63e;
-    --accent-fg: #1f1608;
-    --accent-soft: #cd942c24;
-    --accent-ring: #cd942c73;
-
-    --accent-2: oklch(0.87 0.045 240);
-    --accent-2-soft: oklch(0.87 0.045 240 / 0.14);
-
-    --success: oklch(0.75 0.16 155);
-    --success-soft: oklch(0.75 0.16 155 / 0.15);
-    --warning: oklch(0.8 0.15 75);
-    --warning-soft: oklch(0.8 0.15 75 / 0.15);
-    --danger: oklch(0.68 0.19 24);
-    --danger-soft: oklch(0.68 0.19 24 / 0.15);
-    --info: oklch(0.72 0.13 240);
-    --info-soft: oklch(0.72 0.13 240 / 0.15);
-
-    --overlay: oklch(0.08 0.005 285 / 0.72);
-    --shadow-color: 0 0% 0%;
-    --shadow-strength: 0.5;
-}
-
-:root[data-theme='light'] {
+:root {
     color-scheme: light;
 
     --bg: oklch(0.985 0.002 285);
@@ -83,6 +43,7 @@
     --shadow-color: 285 20% 40%;
     --shadow-strength: 0.13;
 }
+
 
 @theme inline {
     --font-sans:
@@ -149,8 +110,8 @@
         font-family: var(--font-heading);
     }
 
-    html.theme-ready body,
-    html.theme-ready .theme-transition {
+    body,
+    .theme-transition {
         transition:
             background-color 200ms ease,
             border-color 200ms ease,

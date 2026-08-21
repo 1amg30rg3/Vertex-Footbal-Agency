@@ -6,7 +6,6 @@ use App\Http\Controllers\Admin\MediaUploadController;
 use App\Http\Controllers\Admin\NewsCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\PlayerController as AdminPlayerController;
-use App\Http\Controllers\Admin\PreferenceController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\TrainerController as AdminTrainerController;
@@ -44,8 +43,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/', DashboardController::class)->name('dashboard');
         Route::get('dashboard', fn () => redirect()->route('admin.dashboard'));
-
-        Route::patch('preferences/theme', [PreferenceController::class, 'theme'])->name('preferences.theme');
 
         Route::post('media/video', [MediaUploadController::class, 'video'])
             ->middleware('throttle:30,1')

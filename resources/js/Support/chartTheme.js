@@ -1,10 +1,6 @@
 import { computed } from 'vue';
-import { useTheme } from '@/Composables/useTheme';
 
-export const CATEGORICAL = {
-    dark: ['#AC7D03', '#3D8AD4', '#C3608A'],
-    light: ['#9D7206', '#1F7DCF', '#BB4E7F'],
-};
+export const CATEGORICAL = ['#9D7206', '#1F7DCF', '#BB4E7F'];
 
 function token(name, fallback) {
     if (typeof window === 'undefined') return fallback;
@@ -15,13 +11,9 @@ function token(name, fallback) {
 }
 
 export function useChartTheme() {
-    const { theme } = useTheme();
-
-    const palette = computed(() => CATEGORICAL[theme.value] ?? CATEGORICAL.dark);
+    const palette = computed(() => CATEGORICAL);
 
     const chrome = computed(() => {
-        void theme.value;
-
         return {
             surface: token('--surface', '#212125'),
             grid: token('--border', '#3a3a40'),
@@ -56,5 +48,5 @@ export function useChartTheme() {
         },
     }));
 
-    return { theme, palette, chrome, baseOptions };
+    return { palette, chrome, baseOptions };
 }

@@ -66,7 +66,7 @@ return [
 
     'players' => [
         'title' => 'Jugadores',
-        'lead' => 'Los deportistas que representamos.',
+        'lead' => 'Los futbolistas que representamos.',
         'empty' => 'Aún no se ha publicado ningún jugador.',
         'sections' => [
             'personal' => 'Datos personales',
@@ -190,7 +190,6 @@ return [
 
     'footer' => [
         'tagline' => 'Más que representación.',
-        'quick_links' => 'Enlaces rápidos',
         'contact' => 'Contacto',
         'rights' => 'Todos los derechos reservados.',
     ],

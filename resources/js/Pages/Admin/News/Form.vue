@@ -151,6 +151,20 @@ function destroy() {
 
                     <hr class="border-border">
 
+                    <FormField
+                        label="External link"
+                        hint="Point this article at another site, e.g. a BBC Sport story. Readers open it in a new tab instead of the article page. Leave empty to use this site's own article."
+                        :error="form.errors.external_url"
+                        v-slot="{ id, invalid }"
+                    >
+                        <TextInput
+                            :id="id"
+                            v-model="form.external_url"
+                            :invalid="invalid"
+                            placeholder="https://www.bbc.com/sport/football/…"
+                        />
+                    </FormField>
+
                     <FormField label="Slug" hint="Auto-generated if empty." :error="form.errors.slug" v-slot="{ id, invalid }">
                         <TextInput :id="id" v-model="form.slug" :invalid="invalid" />
                     </FormField>

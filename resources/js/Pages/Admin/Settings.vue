@@ -20,7 +20,6 @@ import Button from '@/Components/Ui/Button.vue';
 import Icon from '@/Components/Ui/Icon.vue';
 import Alert from '@/Components/Ui/Alert.vue';
 import ConfirmDialog from '@/Components/Ui/ConfirmDialog.vue';
-import { useTheme } from '@/Composables/useTheme';
 
 const props = defineProps({
     settings: { type: Object, required: true },
@@ -31,7 +30,6 @@ const props = defineProps({
 
 const route = useRoute();
 const page = usePage();
-const { theme, setTheme } = useTheme();
 
 const key = () => Math.random().toString(36).slice(2);
 const platforms = ['instagram', 'facebook', 'linkedin', 'twitter', 'youtube', 'link'];
@@ -51,11 +49,6 @@ const userColumns = [
     { key: 'role', label: 'Role', align: 'center' },
     { key: 'last_login_at', label: 'Last login', muted: true },
     { key: 'actions', label: '', align: 'right', width: 'w-24' },
-];
-
-const themeOptions = [
-    { value: 'dark', label: 'Dark' },
-    { value: 'light', label: 'Light' },
 ];
 
 function submit() {
@@ -221,16 +214,7 @@ function confirmDeleteUser() {
                 </div>
             </form>
 
-            <FormSection id="appearance" number="04" title="Appearance" description="Saved against your account.">
-                <FormField label="Admin theme" v-slot="{ id }">
-                    <SelectInput
-                        :id="id"
-                        :model-value="theme"
-                        :options="themeOptions"
-                        @update:model-value="setTheme($event)"
-                    />
-                </FormField>
-
+            <FormSection id="appearance" number="04" title="Account">
                 <p class="text-xs text-fg-subtle">
                     Signed in as <span class="text-fg">{{ page.props.auth?.user?.email }}</span>.
                 </p>

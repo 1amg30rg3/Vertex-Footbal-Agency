@@ -14,7 +14,11 @@ const props = defineProps({
 const { t, locale } = useI18n();
 const route = useRoute();
 
-const href = computed(() => route('public.news.show', { article: props.article.slug }));
+const isExternal = computed(() => !!props.article.external_url);
+
+const href = computed(() =>
+    isExternal.value ? props.article.external_url : route('public.news.show', { article: props.article.slug }),
+);
 
 const date = computed(() =>
     props.article.published_at
@@ -28,8 +32,11 @@ const date = computed(() =>
 </script>
 
 <template>
-    <Link
+    <component
+        :is="isExternal ? 'a' : Link"
         :href="href"
+        :target="isExternal ? '_blank' : undefined"
+        :rel="isExternal ? 'noopener noreferrer' : undefined"
         :class="[
             'group flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-[border-color,translate] duration-300 hover:-translate-y-1 hover:border-accent/60',
             featured ? 'sm:flex-row' : '',
@@ -80,8 +87,8 @@ const date = computed(() =>
 
             <span class="mt-4 inline-flex items-center gap-1 text-xs font-medium text-accent transition-transform group-hover:translate-x-0.5">
                 {{ t('common.read_more') }}
-                <Icon name="arrowRight" :size="13" />
+                <Icon :name="isExternal ? 'externalLink' : 'arrowRight'" :size="13" />
             </span>
         </div>
-    </Link>
+    </component>
 </template>

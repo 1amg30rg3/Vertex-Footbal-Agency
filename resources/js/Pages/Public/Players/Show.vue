@@ -36,6 +36,18 @@ const season = computed(
     () => props.player.seasons?.find((item) => item.id === activeSeasonId.value) ?? null,
 );
 
+const hasPlayingTime = computed(() => {
+    const split = season.value?.playing_time;
+
+    if (!split) return false;
+
+    return (split.starting ?? 0) + (split.substitute ?? 0) + (split.not_in_squad ?? 0) > 0;
+});
+
+const hasMonthlyBreakdown = computed(() =>
+    (season.value?.months ?? []).some((month) => (month.goals ?? 0) > 0 || (month.assists ?? 0) > 0),
+);
+
 const seasonTabs = computed(() =>
     (props.player.seasons ?? []).map((item) => ({ value: item.id, label: item.label })),
 );
@@ -430,8 +442,14 @@ const goalBlocks = computed(() =>
                         <StatTile v-reveal="240" :label="t('players.minutes')" :value="season.minutes_played" icon="clock" tone="figure" size="lg" animate />
                     </div>
 
-                    <div class="grid gap-6 lg:grid-cols-[1fr_1.6fr]">
-                        <div class="rounded-2xl border border-border bg-surface p-6">
+                    <div
+                        v-if="hasPlayingTime || hasMonthlyBreakdown"
+                        :class="[
+                            'grid gap-6',
+                            hasPlayingTime && hasMonthlyBreakdown ? 'lg:grid-cols-[1fr_1.6fr]' : '',
+                        ]"
+                    >
+                        <div v-if="hasPlayingTime" class="rounded-2xl border border-border bg-surface p-6">
                             <StatDonut
                                 :title="t('players.playing_time')"
                                 :slices="[
@@ -444,7 +462,7 @@ const goalBlocks = computed(() =>
                             />
                         </div>
 
-                        <div class="rounded-2xl border border-border bg-surface p-6">
+                        <div v-if="hasMonthlyBreakdown" class="rounded-2xl border border-border bg-surface p-6">
                             <MonthlyBarChart
                                 :months="season.months"
                                 :title="t('players.monthly_breakdown')"

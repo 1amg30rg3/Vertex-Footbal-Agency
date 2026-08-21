@@ -3,7 +3,6 @@ import { computed, ref, watch } from 'vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
 import { useRoute } from '@/Support/ziggy';
 import Icon from '@/Components/Ui/Icon.vue';
-import ThemeToggle from '@/Components/Ui/ThemeToggle.vue';
 import Alert from '@/Components/Ui/Alert.vue';
 import Button from '@/Components/Ui/Button.vue';
 import Logo from '@/Components/Site/Logo.vue';
@@ -194,7 +193,6 @@ function logout() {
 
                     <div class="flex items-center gap-2">
                         <slot name="actions" />
-                        <ThemeToggle />
                     </div>
                 </div>
             </header>

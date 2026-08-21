@@ -32,6 +32,7 @@ class NewsRequest extends AdminFormRequest
                     'nullable', 'string', 'max:190', 'alpha_dash',
                     Rule::unique('news', 'slug')->ignore($article?->id),
                 ],
+                'external_url' => ['nullable', 'url:http,https', 'max:2048'],
                 'news_category_id' => ['nullable', 'integer', 'exists:news_categories,id'],
                 'status' => ['required', Rule::in(News::STATUSES)],
                 'published_at' => ['nullable', 'date', Rule::requiredIf(fn () => $this->input('status') === 'scheduled')],

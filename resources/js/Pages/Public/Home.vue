@@ -121,11 +121,11 @@ const wordmark = computed(() => (site.value.name ?? 'VERTEX').split(' ')[0]);
 
         <section v-if="clubs.length" class="border-b border-border bg-bg-elevated">
             <div class="flex items-center gap-6 py-5 lg:gap-10">
-                <h2 class="shrink-0 border-r border-border pl-4 pr-6 text-[11px] font-semibold uppercase leading-tight tracking-[0.22em] text-fg-subtle sm:pl-6 lg:pl-8">
+                <h2 class="hidden shrink-0 border-r border-border pl-4 pr-6 text-[11px] font-semibold uppercase leading-tight tracking-[0.22em] text-fg-subtle sm:block sm:pl-6 lg:pl-8">
                     {{ t('home.clubs_eyebrow') }}
                 </h2>
 
-                <Marquee :items="clubs" class="min-w-0 flex-1 pr-4" />
+                <Marquee :items="clubs" class="min-w-0 flex-1 pl-4 pr-4 sm:pl-0" />
             </div>
         </section>
 

@@ -372,7 +372,7 @@
     "name": "ziggy"
   },
   "resources/css/app.css": {
-    "file": "assets/app-DFRF-cM-.css",
+    "file": "assets/app-CIwLjwm-.css",
     "name": "app",
     "names": [
       "app.css"
@@ -675,7 +675,7 @@
     ]
   },
   "resources/js/Pages/Public/Home.vue": {
-    "file": "assets/Home-CANtmafE.js",
+    "file": "assets/Home-5ya4yP-V.js",
     "name": "Home",
     "src": "resources/js/Pages/Public/Home.vue",
     "isDynamicEntry": true,
@@ -805,7 +805,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-C7ZyR9qr.js",
+    "file": "assets/app-BriO590a.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -841,7 +841,7 @@
       "resources/js/Pages/Public/Trainers/Show.vue"
     ],
     "css": [
-      "assets/app-DFRF-cM-.css"
+      "assets/app-CIwLjwm-.css"
     ]
   }
 }

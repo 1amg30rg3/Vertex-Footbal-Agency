@@ -11,9 +11,9 @@ const entries = computed(() => props.items.filter((item) => !!item));
 const pass = computed(() => {
     if (!entries.value.length) return [];
 
-    const filled = [];
+    const filled = [...entries.value];
 
-    while (filled.length < 12) filled.push(...entries.value);
+    while (filled.length < 4) filled.push(...entries.value);
 
     return filled;
 });

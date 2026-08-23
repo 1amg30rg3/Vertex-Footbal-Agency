@@ -55,6 +55,7 @@ class Player extends Model
             'weight_kg' => 'integer',
             'pitch_x' => 'float',
             'pitch_y' => 'float',
+            'pitch_positions' => 'array',
             'sort_order' => 'integer',
         ];
     }

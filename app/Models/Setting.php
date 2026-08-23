@@ -54,6 +54,8 @@ class Setting extends Model
 
         return [
             'name' => $pick('site_name', config('app.name')),
+            // Untranslated: the wordmark is a brand mark, not copy.
+            'brand' => config('app.name'),
             'tagline' => $pick('site_tagline'),
             'logo' => static::mediaUrl($all['logo_path'] ?? null),
             'logo_light' => static::mediaUrl($all['logo_light_path'] ?? null),

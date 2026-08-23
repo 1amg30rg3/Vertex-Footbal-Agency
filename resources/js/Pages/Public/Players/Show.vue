@@ -63,7 +63,7 @@ const sections = computed(() =>
             id: 'profile',
             number: '02',
             label: t('players.sections.profile'),
-            show: !!(props.player.playing_style || props.player.skills?.length || props.player.pitch),
+            show: !!(props.player.playing_style || props.player.skills?.length || props.player.pitch?.length),
         },
         {
             id: 'career',
@@ -348,7 +348,7 @@ const goalBlocks = computed(() =>
             </section>
 
             <section
-                v-if="player.playing_style || player.skills?.length || player.pitch"
+                v-if="player.playing_style || player.skills?.length || player.pitch?.length"
                 id="profile"
                 class="scroll-mt-32"
             >
@@ -378,12 +378,12 @@ const goalBlocks = computed(() =>
                         </div>
                     </div>
 
-                    <div v-if="player.pitch">
+                    <div v-if="player.pitch?.length">
                         <h3 class="text-sm font-semibold uppercase tracking-wide text-accent">
                             {{ t('players.field_position') }}
                         </h3>
                         <div class="mt-5 mx-auto max-w-[16rem]">
-                            <PitchPositionMarker :x="player.pitch.x" :y="player.pitch.y" :label="positionLabel" />
+                            <PitchPositionMarker :positions="player.pitch" :label="positionLabel" />
                         </div>
                     </div>
                 </div>

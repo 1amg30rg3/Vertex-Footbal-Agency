@@ -148,8 +148,10 @@ class PlayerController extends Controller
             'city' => $data['city'] ?? null,
             'country' => $data['country'] ?? null,
             'playing_style' => RichText::cleanMap($data['playing_style'] ?? []),
-            'pitch_x' => $data['pitch_x'] ?? null,
-            'pitch_y' => $data['pitch_y'] ?? null,
+            'pitch_positions' => collect($data['pitch_positions'] ?? [])
+                ->map(fn (array $spot) => ['x' => (float) $spot['x'], 'y' => (float) $spot['y']])
+                ->values()
+                ->all(),
             'goals_short_term' => RichText::cleanMap($data['goals_short_term'] ?? []),
             'goals_mid_term' => RichText::cleanMap($data['goals_mid_term'] ?? []),
             'goals_long_term' => RichText::cleanMap($data['goals_long_term'] ?? []),
@@ -299,8 +301,7 @@ class PlayerController extends Controller
             'city' => $player->city,
             'country' => $player->country,
             'playing_style' => $this->map($player, 'playing_style'),
-            'pitch_x' => $player->pitch_x,
-            'pitch_y' => $player->pitch_y,
+            'pitch_positions' => $player->pitch_positions ?? [],
             'goals_short_term' => $this->map($player, 'goals_short_term'),
             'goals_mid_term' => $this->map($player, 'goals_mid_term'),
             'goals_long_term' => $this->map($player, 'goals_long_term'),
@@ -394,7 +395,7 @@ class PlayerController extends Controller
             'phone' => null, 'email' => null, 'instagram' => null,
             'city' => null, 'country' => null,
             'playing_style' => Locales::blankMap(''),
-            'pitch_x' => 50, 'pitch_y' => 50,
+            'pitch_positions' => [],
             'goals_short_term' => Locales::blankMap(''),
             'goals_mid_term' => Locales::blankMap(''),
             'goals_long_term' => Locales::blankMap(''),

@@ -1,41 +1,62 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const props = defineProps({
-    x: { type: Number, default: null },
-    y: { type: Number, default: null },
+    positions: { type: Array, default: () => [] },
     editable: { type: Boolean, default: false },
     label: { type: String, default: null },
+    max: { type: Number, default: 11 },
 });
 
-const emit = defineEmits(['update:x', 'update:y']);
+const emit = defineEmits(['update:positions']);
 
 const surface = ref(null);
 const dragging = ref(false);
+const active = ref(0);
 
-const hasMarker = computed(() => props.x !== null && props.y !== null);
-const left = computed(() => `${Math.max(0, Math.min(100, props.x ?? 50))}%`);
-const top = computed(() => `${Math.max(0, Math.min(100, props.y ?? 50))}%`);
+const spots = computed(() => props.positions ?? []);
+const atLimit = computed(() => spots.value.length >= props.max);
 
-function setFromEvent(event) {
-    if (!props.editable || !surface.value) return;
+watch(
+    () => spots.value.length,
+    (length) => {
+        if (active.value > length - 1) active.value = Math.max(0, length - 1);
+    },
+);
 
+const clamp = (value) => Math.round(Math.max(0, Math.min(100, value)) * 10) / 10;
+
+function pointFrom(event) {
     const rect = surface.value.getBoundingClientRect();
     const point = event.touches?.[0] ?? event;
-    const nextX = ((point.clientX - rect.left) / rect.width) * 100;
-    const nextY = ((point.clientY - rect.top) / rect.height) * 100;
 
-    emit('update:x', Math.round(Math.max(0, Math.min(100, nextX)) * 10) / 10);
-    emit('update:y', Math.round(Math.max(0, Math.min(100, nextY)) * 10) / 10);
+    return {
+        x: clamp(((point.clientX - rect.left) / rect.width) * 100),
+        y: clamp(((point.clientY - rect.top) / rect.height) * 100),
+    };
+}
+
+function replace(index, spot) {
+    emit('update:positions', spots.value.map((item, i) => (i === index ? spot : item)));
 }
 
 function onPointerDown(event) {
-    if (!props.editable) return;
+    if (!props.editable || !surface.value) return;
+
+    const spot = pointFrom(event);
+
+    // An empty pitch, or a click with room left, drops a new marker; dragging
+    // then moves whichever marker is active.
+    if (!spots.value.length || (event.shiftKey && !atLimit.value)) {
+        emit('update:positions', [...spots.value, spot]);
+        active.value = spots.value.length;
+    } else {
+        replace(active.value, spot);
+    }
 
     dragging.value = true;
-    setFromEvent(event);
 
-    const move = (moveEvent) => dragging.value && setFromEvent(moveEvent);
+    const move = (moveEvent) => dragging.value && replace(active.value, pointFrom(moveEvent));
     const up = () => {
         dragging.value = false;
         window.removeEventListener('pointermove', move);
@@ -46,11 +67,23 @@ function onPointerDown(event) {
     window.addEventListener('pointerup', up);
 }
 
-function nudge(dx, dy) {
-    if (!props.editable) return;
+function addSpot() {
+    if (atLimit.value) return;
 
-    emit('update:x', Math.round(Math.max(0, Math.min(100, (props.x ?? 50) + dx)) * 10) / 10);
-    emit('update:y', Math.round(Math.max(0, Math.min(100, (props.y ?? 50) + dy)) * 10) / 10);
+    emit('update:positions', [...spots.value, { x: 50, y: 50 }]);
+    active.value = spots.value.length;
+}
+
+function removeSpot(index) {
+    emit('update:positions', spots.value.filter((_, i) => i !== index));
+}
+
+function nudge(dx, dy) {
+    const spot = spots.value[active.value];
+
+    if (!props.editable || !spot) return;
+
+    replace(active.value, { x: clamp(spot.x + dx), y: clamp(spot.y + dy) });
 }
 </script>
 
@@ -59,7 +92,7 @@ function nudge(dx, dy) {
         <div
             ref="surface"
             :class="[
-                'relative aspect-[2/3] w-full overflow-hidden rounded-xl border border-border bg-surface-2 select-none',
+                'relative aspect-[2/3] w-full select-none overflow-hidden rounded-xl border border-border bg-surface-2',
                 editable ? 'cursor-crosshair' : '',
             ]"
             @pointerdown="onPointerDown"
@@ -80,23 +113,45 @@ function nudge(dx, dy) {
             </svg>
 
             <div
-                v-if="hasMarker"
-                class="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-1/2"
-                :style="{ left, top }"
+                v-for="(spot, index) in spots"
+                :key="index"
+                :class="[
+                    'absolute z-10 -translate-x-1/2 -translate-y-1/2',
+                    editable ? 'cursor-pointer' : 'pointer-events-none',
+                ]"
+                :style="{ left: `${spot.x}%`, top: `${spot.y}%` }"
+                @pointerdown.stop="editable && (active = index)"
             >
-                <span class="absolute inset-0 -m-3 animate-ping rounded-full bg-accent/25" v-if="!editable" />
-                <span class="relative block h-5 w-5 rounded-full border-2 border-accent-fg bg-accent shadow-lg" />
+                <span v-if="!editable" class="absolute inset-0 -m-3 animate-ping rounded-full bg-accent/25" />
                 <span
-                    v-if="label"
+                    :class="[
+                        'relative block h-5 w-5 rounded-full border-2 shadow-lg',
+                        editable && index === active
+                            ? 'border-fg bg-accent ring-2 ring-accent-ring'
+                            : 'border-accent-fg bg-accent',
+                    ]"
+                />
+
+                <button
+                    v-if="editable"
+                    type="button"
+                    class="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-danger text-[10px] font-bold leading-none text-white shadow"
+                    :aria-label="`Remove position ${index + 1}`"
+                    @pointerdown.stop
+                    @click.stop="removeSpot(index)"
+                >×</button>
+
+                <span
+                    v-if="label && !editable && spots.length === 1"
                     class="absolute left-1/2 top-full mt-1.5 -translate-x-1/2 whitespace-nowrap rounded-md bg-bg-elevated px-1.5 py-0.5 text-[10px] font-semibold text-fg shadow"
                 >{{ label }}</span>
             </div>
 
             <p
-                v-else-if="editable"
+                v-if="editable && !spots.length"
                 class="absolute inset-0 flex items-center justify-center px-6 text-center text-xs text-fg-subtle"
             >
-                Click anywhere on the pitch to place the marker.
+                Click anywhere on the pitch to place a position.
             </p>
         </div>
 
@@ -109,9 +164,17 @@ function nudge(dx, dy) {
                 <button type="button" class="rounded bg-surface-2 px-2 py-0.5 text-xs text-fg-muted hover:bg-surface-3" @click="nudge(0, 1)">↓</button>
                 <button type="button" class="rounded bg-surface-2 px-2 py-0.5 text-xs text-fg-muted hover:bg-surface-3" @click="nudge(1, 0)">→</button>
             </div>
-            <p class="text-xs tabular-nums text-fg-subtle">
-                x {{ (x ?? 50).toFixed(1) }}% · y {{ (y ?? 50).toFixed(1) }}%
-            </p>
+
+            <button
+                type="button"
+                class="rounded-lg border border-border px-2.5 py-1 text-xs font-medium text-fg-muted transition-colors hover:border-accent hover:text-accent disabled:opacity-40"
+                :disabled="atLimit"
+                @click="addSpot"
+            >Add position</button>
+
+            <span class="text-[11px] text-fg-subtle">
+                {{ spots.length }}/{{ max }} — click to move the selected one, shift-click to add
+            </span>
         </div>
     </div>
 </template>

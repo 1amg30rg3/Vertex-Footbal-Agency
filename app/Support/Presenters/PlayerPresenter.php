@@ -49,9 +49,10 @@ class PlayerPresenter extends Presenter
             ], fn ($value) => filled($value)),
 
             'playing_style' => $this->t($player, 'playing_style'),
-            'pitch' => $player->pitch_x !== null && $player->pitch_y !== null
-                ? ['x' => $player->pitch_x, 'y' => $player->pitch_y]
-                : null,
+            'pitch' => collect($player->pitch_positions ?? [])
+                ->map(fn ($spot) => ['x' => (float) $spot['x'], 'y' => (float) $spot['y']])
+                ->values()
+                ->all(),
             'skills' => $player->skills->map(fn ($skill) => [
                 'id' => $skill->id,
                 'label' => $this->t($skill, 'label'),

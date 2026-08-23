@@ -414,11 +414,8 @@ const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 
                         <div>
                             <p class="mb-2 text-sm font-medium text-fg">Position on the pitch</p>
                             <PitchPositionMarker
-                                :x="form.pitch_x"
-                                :y="form.pitch_y"
+                                v-model:positions="form.pitch_positions"
                                 editable
-                                @update:x="form.pitch_x = $event"
-                                @update:y="form.pitch_y = $event"
                             />
                         </div>
                     </div>

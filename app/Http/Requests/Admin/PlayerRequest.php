@@ -51,6 +51,9 @@ class PlayerRequest extends AdminFormRequest
 
                 'pitch_x' => ['nullable', 'numeric', 'min:0', 'max:100'],
                 'pitch_y' => ['nullable', 'numeric', 'min:0', 'max:100'],
+                'pitch_positions' => ['array', 'max:11'],
+                'pitch_positions.*.x' => ['required', 'numeric', 'min:0', 'max:100'],
+                'pitch_positions.*.y' => ['required', 'numeric', 'min:0', 'max:100'],
                 'skills' => ['array', 'max:24'],
                 'skills.*.id' => ['nullable', 'integer'],
                 'skills.*.value' => ['required', 'integer', 'min:0', 'max:100'],

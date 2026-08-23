@@ -70,7 +70,7 @@ const restColumns = computed(() =>
 
 const shownPlayers = computed(() => props.players.slice(0, 6));
 
-const wordmark = computed(() => (site.value.name ?? 'VERTEX').split(' ')[0]);
+const wordmark = computed(() => (site.value.brand ?? 'VERTEX').split(' ')[0].toUpperCase());
 </script>
 
 <template>

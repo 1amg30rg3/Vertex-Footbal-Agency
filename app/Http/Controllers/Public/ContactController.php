@@ -27,6 +27,7 @@ class ContactController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email:rfc', 'max:190'],
+            'phone' => ['nullable', 'string', 'max:40', 'regex:/^\\+?[0-9 ()\\-]{6,}$/'],
             'subject' => ['nullable', 'string', 'max:190'],
             'message' => ['required', 'string', 'min:10', 'max:5000'],
             'website' => ['prohibited'],
@@ -37,6 +38,7 @@ class ContactController extends Controller
         ContactMessage::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'] ?? null,
             'subject' => $data['subject'] ?? null,
             'message' => $data['message'],
             'locale' => app()->getLocale(),

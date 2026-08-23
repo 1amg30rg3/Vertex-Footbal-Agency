@@ -44,7 +44,7 @@ return [
 
     'home' => [
         'info_eyebrow' => 'Quiénes somos',
-        'info_heading' => 'Más que representación. Un equipo construido para tu máximo potencial.',
+        'info_heading' => 'Más que representación.',
         'info_body' => [
             'En VERTEX Football Agency somos más que agentes de fútbol licenciados: somos un equipo unido, comprometido con ayudar a los jugadores con talento a alcanzar el punto más alto de su carrera.',
             'Desde los años de academia hasta el escenario profesional, acompañamos a cada jugador y apoyamos su desarrollo técnico, físico, mental y personal. Creemos que el éxito se construye mucho antes del primer contrato profesional, y por eso invertimos en cada paso del camino.',
@@ -181,6 +181,8 @@ return [
         'form_lead' => 'Normalmente respondemos en dos días laborables.',
         'name' => 'Tu nombre',
         'your_email' => 'Tu correo electrónico',
+        'your_phone' => 'Teléfono (opcional)',
+        'country_code' => 'Código de país',
         'subject' => 'Asunto',
         'message' => 'Mensaje',
         'send' => 'Enviar mensaje',

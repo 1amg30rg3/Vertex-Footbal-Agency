@@ -143,6 +143,12 @@ function confirmDelete() {
                             <a :href="`mailto:${viewing.email}`" class="text-accent hover:underline">{{ viewing.email }}</a>
                         </dd>
                     </div>
+                    <div v-if="viewing.phone">
+                        <dt class="text-xs text-fg-subtle">Phone</dt>
+                        <dd class="mt-0.5">
+                            <a :href="`tel:${viewing.phone.replace(/[^+0-9]/g, '')}`" class="text-accent hover:underline">{{ viewing.phone }}</a>
+                        </dd>
+                    </div>
                     <div>
                         <dt class="text-xs text-fg-subtle">Received</dt>
                         <dd class="mt-0.5 text-fg">{{ viewing.created_at }}</dd>

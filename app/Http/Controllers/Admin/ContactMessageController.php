@@ -26,6 +26,7 @@ class ContactMessageController extends Controller
                     'id' => $message->id,
                     'name' => $message->name,
                     'email' => $message->email,
+                    'phone' => $message->phone,
                     'subject' => $message->subject,
                     'message' => $message->message,
                     'locale' => $message->locale,

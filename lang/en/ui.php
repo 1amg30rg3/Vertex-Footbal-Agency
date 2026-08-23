@@ -44,7 +44,7 @@ return [
 
     'home' => [
         'info_eyebrow' => 'Who we are',
-        'info_heading' => 'More Than Representation. A Team Built for Your Highest Potential.',
+        'info_heading' => 'More Than Representation.',
         'info_body' => [
             'At VERTEX Football Agency, we are more than licensed football agents — we are a united team committed to helping talented players reach the highest point of their careers.',
             'From the academy years to the professional stage, we stand beside every player, supporting their technical, physical, mental, and personal development. We believe success is built long before the first professional contract, which is why we invest in every step of the journey.',
@@ -181,6 +181,8 @@ return [
         'form_lead' => 'We usually reply within two working days.',
         'name' => 'Your name',
         'your_email' => 'Your email',
+        'your_phone' => 'Phone (optional)',
+        'country_code' => 'Country code',
         'subject' => 'Subject',
         'message' => 'Message',
         'send' => 'Send message',
@@ -189,7 +191,7 @@ return [
     ],
 
     'footer' => [
-        'tagline' => 'More Than Representation. A Team Built for Your Highest Potential.',
+        'tagline' => 'More Than Representation.',
         'contact' => 'Contact',
         'rights' => 'All rights reserved.',
     ],

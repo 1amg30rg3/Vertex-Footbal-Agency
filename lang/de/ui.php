@@ -44,7 +44,7 @@ return [
 
     'home' => [
         'info_eyebrow' => 'Wer wir sind',
-        'info_heading' => 'Mehr als Beratung. Ein Team, das auf Ihr höchstes Potenzial ausgerichtet ist.',
+        'info_heading' => 'Mehr als Beratung.',
         'info_body' => [
             'Bei der VERTEX Football Agency sind wir mehr als lizenzierte Spielerberater — wir sind ein geschlossenes Team, das talentierte Spieler dabei unterstützt, den höchsten Punkt ihrer Karriere zu erreichen.',
             'Von den Jahren in der Akademie bis zur Profibühne stehen wir jedem Spieler zur Seite und fördern seine technische, körperliche, mentale und persönliche Entwicklung. Wir glauben, dass Erfolg lange vor dem ersten Profivertrag entsteht — deshalb investieren wir in jeden Schritt des Weges.',
@@ -181,6 +181,8 @@ return [
         'form_lead' => 'Wir antworten in der Regel innerhalb von zwei Werktagen.',
         'name' => 'Ihr Name',
         'your_email' => 'Ihre E-Mail',
+        'your_phone' => 'Telefon (optional)',
+        'country_code' => 'Ländervorwahl',
         'subject' => 'Betreff',
         'message' => 'Nachricht',
         'send' => 'Nachricht senden',

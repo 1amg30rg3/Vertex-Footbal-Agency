@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { useI18n } from '@/Composables/useI18n';
 import { useRoute } from '@/Support/ziggy';
@@ -7,12 +7,14 @@ import PublicLayout from '@/Layouts/PublicLayout.vue';
 import PageHero from '@/Components/Site/PageHero.vue';
 import FormField from '@/Components/Form/FormField.vue';
 import TextInput from '@/Components/Form/TextInput.vue';
+import SelectInput from '@/Components/Form/SelectInput.vue';
+import { DIAL_CODES, defaultCountry, dialFor } from '@/Support/dialCodes';
 import TextArea from '@/Components/Form/TextArea.vue';
 import Button from '@/Components/Ui/Button.vue';
 import Alert from '@/Components/Ui/Alert.vue';
 import Icon from '@/Components/Ui/Icon.vue';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const route = useRoute();
 const page = usePage();
 
@@ -21,10 +23,15 @@ const site = computed(() => page.props.site ?? {});
 const form = useForm({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: '',
     website: '',
 });
+
+const country = ref(defaultCountry(locale.value));
+
+const dialOptions = DIAL_CODES.map((item) => ({ value: item.iso, label: item.iso+' '+item.dial }));
 
 const details = computed(() =>
     [
@@ -61,6 +68,12 @@ const socialIcons = {
 const socials = computed(() => site.value.socials ?? []);
 
 function submit() {
+    // The code and the number are two inputs but one stored value.
+    form.transform((data) => ({
+        ...data,
+        phone: data.phone.trim() ? (dialFor(country.value)+' '+data.phone.trim()) : null,
+    }));
+
     form.post(route('public.contacts.store'), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
@@ -134,6 +147,31 @@ function submit() {
                                 <TextInput :id="id" v-model="form.email" type="email" :invalid="invalid" autocomplete="email" />
                             </FormField>
                         </div>
+
+                        <FormField
+                            :label="t('contacts.your_phone')"
+                            :error="form.errors.phone"
+                            v-slot="{ id, invalid }"
+                        >
+                            <div class="flex gap-2">
+                                <SelectInput
+                                    v-model="country"
+                                    :options="dialOptions"
+                                    class="w-32 shrink-0"
+                                    :aria-label="t('contacts.country_code')"
+                                />
+                                <TextInput
+                                    :id="id"
+                                    v-model="form.phone"
+                                    type="tel"
+                                    inputmode="tel"
+                                    autocomplete="tel-national"
+                                    :invalid="invalid"
+                                    placeholder="555 12 34 56"
+                                    class="flex-1"
+                                />
+                            </div>
+                        </FormField>
 
                         <FormField :label="t('contacts.subject')" :error="form.errors.subject" v-slot="{ id, invalid }">
                             <TextInput :id="id" v-model="form.subject" :invalid="invalid" />

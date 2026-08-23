@@ -33,9 +33,7 @@ const socials = computed(() => site.value.socials ?? []);
 </script>
 
 <template>
-    <Head :title="t('about.title')">
-        <meta name="description" :content="t('about.lead')">
-    </Head>
+    <Head :title="t('about.title')" />
 
     <PublicLayout>
         <PageHero :title="t('about.title')" :lead="t('about.lead')" />

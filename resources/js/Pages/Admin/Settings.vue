@@ -144,6 +144,14 @@ function confirmDeleteUser() {
                             height="h-24"
                             :croppable="false"
                         />
+                        <ImageUploader
+                            v-model="form.share_image_path"
+                            :preview-url="settings.share_image_url"
+                            label="Social share image"
+                            hint="Shown when a link is shared on Facebook, LinkedIn, WhatsApp or X. Use 1200×630. Falls back to the logo, which crops badly."
+                            height="h-32"
+                            :croppable="false"
+                        />
                     </div>
 
                     <LanguageTabs v-model="form.copyright" label="Copyright line" name="copyright" :errors="form.errors" v-slot="{ locale }">

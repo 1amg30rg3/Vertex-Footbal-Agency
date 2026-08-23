@@ -57,6 +57,7 @@ class Setting extends Model
             'tagline' => $pick('site_tagline'),
             'logo' => static::mediaUrl($all['logo_path'] ?? null),
             'logo_light' => static::mediaUrl($all['logo_light_path'] ?? null),
+            'share_image' => static::mediaUrl($all['share_image_path'] ?? null),
             'email' => $all['contact_email'] ?? null,
             'phone' => $all['contact_phone'] ?? null,
             'address' => $pick('contact_address'),

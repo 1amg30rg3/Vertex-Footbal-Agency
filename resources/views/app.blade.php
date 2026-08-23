@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#ffffff">
 
-    <title inertia>{{ config('app.name', 'VERTEX Football Agency') }}</title>
+    @include('partials.seo')
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 

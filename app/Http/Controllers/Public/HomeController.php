@@ -29,6 +29,8 @@ class HomeController extends Controller
             $featured = News::query()->with('category')->live()->recent()->limit($limit)->get();
         }
 
+        $this->seo()->description(__('ui.home.info_heading'));
+
         return Inertia::render('Public/Home', [
             'featuredNews' => NewsPresenter::make()->collection($featured),
             'players' => PlayerPresenter::make()->collection(

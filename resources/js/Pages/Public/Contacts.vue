@@ -69,9 +69,7 @@ function submit() {
 </script>
 
 <template>
-    <Head :title="t('contacts.title')">
-        <meta name="description" :content="t('contacts.lead')">
-    </Head>
+    <Head :title="t('contacts.title')" />
 
     <PublicLayout>
         <PageHero :title="t('contacts.title')" :lead="t('contacts.lead')" />

@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Seo;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 abstract class Controller
 {
+    protected function seo(): Seo
+    {
+        return app(Seo::class);
+    }
+
     /**
      * @return array<string, mixed>
      */

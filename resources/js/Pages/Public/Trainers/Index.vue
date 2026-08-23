@@ -30,9 +30,7 @@ watch(search, () => {
 </script>
 
 <template>
-    <Head :title="t('trainers.title')">
-        <meta name="description" :content="t('trainers.lead')">
-    </Head>
+    <Head :title="t('trainers.title')" />
 
     <PublicLayout>
         <PageHero :title="t('trainers.title')" :lead="t('trainers.lead')">

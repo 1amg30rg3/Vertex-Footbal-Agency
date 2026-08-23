@@ -12,6 +12,8 @@ class TeamController extends Controller
 {
     public function __invoke(): Response
     {
+        $this->seo()->title(__('ui.team.title'))->description(__('ui.team.lead'));
+
         return Inertia::render('Public/Team', [
             'members' => TeamMemberPresenter::make()->collection(
                 TeamMember::query()->published()->ordered()->get()

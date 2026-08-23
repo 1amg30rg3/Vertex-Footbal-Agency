@@ -14,9 +14,7 @@ const { t } = useI18n();
 </script>
 
 <template>
-    <Head :title="t('team.title')">
-        <meta name="description" :content="t('team.lead')">
-    </Head>
+    <Head :title="t('team.title')" />
 
     <PublicLayout>
         <PageHero :title="t('team.title')" :lead="t('team.lead')" />

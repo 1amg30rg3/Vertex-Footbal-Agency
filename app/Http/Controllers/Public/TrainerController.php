@@ -22,6 +22,8 @@ class TrainerController extends Controller
             ->paginate(12)
             ->withQueryString();
 
+        $this->seo()->title(__('ui.trainers.title'))->description(__('ui.trainers.lead'));
+
         return Inertia::render('Public/Trainers/Index', [
             'trainers' => [
                 'data' => TrainerPresenter::make()->collection($trainers->items()),
@@ -38,6 +40,21 @@ class TrainerController extends Controller
         $trainer->load('workEntries');
 
         $presenter = TrainerPresenter::make();
+        $detail = $presenter->detail($trainer);
+
+        $this->seo()
+            ->title($detail['seo']['title'] ?? null)
+            ->description($detail['seo']['description'] ?? null)
+            ->image($detail['seo']['image'] ?? null)
+            ->type('profile')
+            ->schema(array_filter([
+                '@context' => 'https://schema.org',
+                '@type' => 'Person',
+                'name' => $detail['full_name'] ?? null,
+                'url' => url()->current(),
+                'image' => $detail['seo']['image'] ?? null,
+                'jobTitle' => $detail['role'] ?? null,
+            ]));
 
         return Inertia::render('Public/Trainers/Show', [
             'trainer' => $presenter->detail($trainer),

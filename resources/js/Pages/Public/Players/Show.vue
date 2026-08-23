@@ -193,10 +193,7 @@ const goalBlocks = computed(() =>
 </script>
 
 <template>
-    <Head :title="player.seo?.title">
-        <meta v-if="player.seo?.description" name="description" :content="player.seo.description">
-        <meta v-if="player.seo?.image" property="og:image" :content="player.seo.image">
-    </Head>
+    <Head :title="player.seo?.title" />
 
     <PublicLayout>
         <section class="relative isolate overflow-hidden border-b border-border">
@@ -218,7 +215,7 @@ const goalBlocks = computed(() =>
                         v-reveal
                         class="h-32 w-32 shrink-0 overflow-hidden rounded-2xl border-2 border-accent/40 bg-surface-2 sm:h-44 sm:w-44"
                     >
-                        <img :src="player.photo" :alt="player.full_name" class="h-full w-full object-cover">
+                        <img :src="player.photo" :alt="player.full_name" fetchpriority="high" class="h-full w-full object-cover">
                     </div>
 
                     <div v-reveal="80" class="min-w-0 flex-1">

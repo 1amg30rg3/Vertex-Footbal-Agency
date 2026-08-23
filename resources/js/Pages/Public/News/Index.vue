@@ -38,9 +38,7 @@ function selectCategory(slug) {
 </script>
 
 <template>
-    <Head :title="t('news.title')">
-        <meta name="description" :content="t('news.lead')">
-    </Head>
+    <Head :title="t('news.title')" />
 
     <PublicLayout>
         <PageHero :title="t('news.title')" :lead="t('news.lead')">

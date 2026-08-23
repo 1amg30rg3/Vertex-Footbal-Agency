@@ -33,6 +33,8 @@ class NewsController extends Controller
 
         $presenter = NewsPresenter::make();
 
+        $this->seo()->title(__('ui.news.title'))->description(__('ui.news.lead'));
+
         return Inertia::render('Public/News/Index', [
             'articles' => [
                 'data' => $presenter->collection($articles->items()),
@@ -56,9 +58,33 @@ class NewsController extends Controller
         $article->incrementQuietly('views');
 
         $presenter = NewsPresenter::make();
+        $detail = $presenter->detail($article);
+
+        $this->seo()
+            ->title($detail['seo']['title'] ?? null)
+            ->description($detail['seo']['description'] ?? null)
+            ->image($detail['seo']['image'] ?? null)
+            ->type('article')
+            ->property('article:published_time', $article->published_at?->toIso8601String())
+            ->property('article:modified_time', $article->updated_at?->toIso8601String())
+            ->property('article:section', $detail['category']['name'] ?? null)
+            ->schema(array_filter([
+                '@context' => 'https://schema.org',
+                '@type' => 'NewsArticle',
+                'headline' => $detail['title'] ?? null,
+                'description' => $detail['seo']['description'] ?? null,
+                'image' => $detail['seo']['image'] ?? null,
+                'datePublished' => $article->published_at?->toIso8601String(),
+                'dateModified' => $article->updated_at?->toIso8601String(),
+                'mainEntityOfPage' => url()->current(),
+                'author' => $article->author?->name
+                    ? ['@type' => 'Person', 'name' => $article->author->name]
+                    : ['@type' => 'Organization', 'name' => config('app.name')],
+                'publisher' => ['@type' => 'Organization', 'name' => config('app.name')],
+            ]));
 
         return Inertia::render('Public/News/Show', [
-            'article' => $presenter->detail($article),
+            'article' => $detail,
             'related' => $presenter->collection(
                 News::query()
                     ->with('category')

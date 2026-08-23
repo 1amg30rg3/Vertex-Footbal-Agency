@@ -39,9 +39,7 @@ const contactLinks = computed(() => {
 </script>
 
 <template>
-    <Head :title="trainer.seo?.title">
-        <meta v-if="trainer.seo?.description" name="description" :content="trainer.seo.description">
-    </Head>
+    <Head :title="trainer.seo?.title" />
 
     <PublicLayout>
         <section class="relative isolate overflow-hidden border-b border-border">

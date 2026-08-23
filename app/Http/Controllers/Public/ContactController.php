@@ -15,6 +15,8 @@ class ContactController extends Controller
 {
     public function index(): Response
     {
+        $this->seo()->title(__('ui.contacts.title'))->description(__('ui.contacts.lead'));
+
         return Inertia::render('Public/Contacts');
     }
 

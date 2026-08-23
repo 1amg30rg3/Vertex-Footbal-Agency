@@ -417,3 +417,11 @@
         scrollbar-width: none;
     }
 }
+
+:lang(ka) h1,
+:lang(ka) h2,
+:lang(ka) h3,
+:lang(ka) h4 {
+    letter-spacing: normal;
+    line-height: 1.16;
+}

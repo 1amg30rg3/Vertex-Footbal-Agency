@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\Setting;
 use App\Support\Locales;
+use App\Support\Seo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Inertia\Middleware;
@@ -26,6 +27,11 @@ class HandleInertiaRequests extends Middleware
         $isAdmin = $request->is('admin', 'admin/*');
 
         $uiLocale = $isAdmin ? config('localization.admin', 'en') : $locale;
+
+        // The admin panel and auth screens must never reach an index.
+        if ($isAdmin || $request->is('admin')) {
+            app(Seo::class)->noindex();
+        }
 
         return array_merge(parent::share($request), [
             'auth' => [

@@ -74,9 +74,7 @@ const wordmark = computed(() => (site.value.name ?? 'VERTEX').split(' ')[0]);
 </script>
 
 <template>
-    <Head :title="null">
-        <meta name="description" :content="t('home.info_heading')">
-    </Head>
+    <Head :title="null" />
 
     <PublicLayout>
         <!--

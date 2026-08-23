@@ -29,6 +29,8 @@ class PlayerController extends Controller
             ->paginate(12)
             ->withQueryString();
 
+        $this->seo()->title(__('ui.players.title'))->description(__('ui.players.lead'));
+
         return Inertia::render('Public/Players/Index', [
             'players' => [
                 'data' => PlayerPresenter::make()->collection($players->items()),
@@ -46,9 +48,28 @@ class PlayerController extends Controller
         $player->load(['skills', 'careerEntries', 'achievements', 'seasons.months', 'photos', 'links']);
 
         $presenter = PlayerPresenter::make();
+        $detail = $presenter->detail($player);
+
+        $this->seo()
+            ->title($detail['seo']['title'] ?? null)
+            ->description($detail['seo']['description'] ?? null)
+            ->image($detail['seo']['image'] ?? null)
+            ->type('profile')
+            ->schema(array_filter([
+                '@context' => 'https://schema.org',
+                '@type' => 'Person',
+                'name' => $detail['full_name'] ?? null,
+                'url' => url()->current(),
+                'image' => $detail['seo']['image'] ?? null,
+                'nationality' => $player->nationality,
+                'height' => $player->height_cm ? $player->height_cm.' cm' : null,
+                'birthDate' => $player->date_of_birth?->toDateString(),
+                'jobTitle' => 'Footballer',
+                'affiliation' => $player->current_club ? ['@type' => 'SportsTeam', 'name' => $player->current_club] : null,
+            ]));
 
         return Inertia::render('Public/Players/Show', [
-            'player' => $presenter->detail($player),
+            'player' => $detail,
             'related' => $presenter->collection(
                 Player::query()
                     ->published()

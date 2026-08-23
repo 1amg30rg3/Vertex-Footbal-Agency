@@ -35,9 +35,7 @@ watch([search, position], apply);
 </script>
 
 <template>
-    <Head :title="t('players.title')">
-        <meta name="description" :content="t('players.lead')">
-    </Head>
+    <Head :title="t('players.title')" />
 
     <PublicLayout>
         <PageHero :title="t('players.title')" :lead="t('players.lead')">
@@ -56,12 +54,11 @@ watch([search, position], apply);
         </PageHero>
 
         <div class="mx-auto max-w-7xl px-4 py-16 pb-24 sm:px-6 lg:px-8 lg:py-24 lg:pb-32">
-            <div v-if="players.data.length" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:pb-14">
+            <div v-if="players.data.length" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <div
                     v-for="(player, i) in players.data"
                     :key="player.id"
-                    v-reveal="(i % 3) * 90"
-                    :class="i % 3 === 1 ? 'lg:mt-14' : ''"
+                    v-reveal="(i % 4) * 70"
                 >
                     <PlayerCard :player="player" />
                 </div>

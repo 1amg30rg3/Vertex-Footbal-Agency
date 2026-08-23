@@ -10,6 +10,8 @@ class AboutController extends Controller
 {
     public function __invoke(): Response
     {
+        $this->seo()->title(__('ui.about.title'))->description(__('ui.about.lead'));
+
         return Inertia::render('Public/About');
     }
 }

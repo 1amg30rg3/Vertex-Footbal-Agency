@@ -18,6 +18,7 @@ use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\LocaleController;
 use App\Http\Controllers\Public\NewsController;
 use App\Http\Controllers\Public\PlayerController;
+use App\Http\Controllers\Public\SitemapController;
 use App\Http\Controllers\Public\TeamController;
 use App\Http\Controllers\Public\TrainerController;
 use Illuminate\Support\Facades\Route;
@@ -100,6 +101,28 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
     });
 });
+
+Route::get('sitemap.xml', SitemapController::class)->name('sitemap');
+
+Route::get('robots.txt', function () {
+    $lines = [
+        'User-agent: *',
+        'Allow: /',
+        '',
+        'Disallow: /admin',
+        'Disallow: /up',
+        'Disallow: /lang/',
+        '',
+        'Disallow: /*?search=',
+        'Disallow: /*?position=',
+        'Disallow: /*?category=',
+        'Disallow: /*?page=',
+        '',
+        'Sitemap: '.url('/sitemap.xml'),
+    ];
+
+    return response(implode(PHP_EOL, $lines).PHP_EOL, 200, ['Content-Type' => 'text/plain']);
+})->name('robots');
 
 Route::get('/', [LocaleController::class, 'redirectToLocalizedHome'])->name('home');
 Route::get('lang/{locale}', [LocaleController::class, 'remember'])->name('locale.remember');

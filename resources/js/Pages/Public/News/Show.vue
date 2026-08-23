@@ -67,8 +67,6 @@ onBeforeUnmount(() => clearTimeout(copyTimer));
 
 <template>
     <Head :title="article.seo?.title">
-        <meta v-if="article.seo?.description" name="description" :content="article.seo.description">
-        <meta v-if="article.seo?.image" property="og:image" :content="article.seo.image">
         <meta property="og:type" content="article">
     </Head>
 
@@ -78,7 +76,8 @@ onBeforeUnmount(() => clearTimeout(copyTimer));
                 <img
                     v-if="article.cover"
                     :src="article.cover"
-                    alt=""
+                    :alt="article.title"
+                    fetchpriority="high"
                     class="h-full w-full object-cover"
                 >
                 <div v-else class="h-full w-full bg-surface-2" />

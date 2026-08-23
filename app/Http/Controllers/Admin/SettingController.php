@@ -38,6 +38,8 @@ class SettingController extends Controller
                 'logo_url' => Setting::mediaUrl($settings['logo_path'] ?? null),
                 'logo_light_path' => $settings['logo_light_path'] ?? null,
                 'logo_light_url' => Setting::mediaUrl($settings['logo_light_path'] ?? null),
+                'share_image_path' => $settings['share_image_path'] ?? null,
+                'share_image_url' => Setting::mediaUrl($settings['share_image_path'] ?? null),
                 'socials' => array_values($settings['socials'] ?? []),
             ],
             'users' => $request->user()->isAdmin()
@@ -68,6 +70,7 @@ class SettingController extends Controller
                 'featured_news_limit' => ['required', 'integer', 'min:1', 'max:12'],
                 'logo_path' => ['nullable'],
                 'logo_light_path' => ['nullable'],
+                'share_image_path' => ['nullable'],
                 'socials' => ['array', 'max:12'],
                 'socials.*.platform' => ['required', 'string', 'max:40'],
                 'socials.*.url' => ['required', 'url', 'max:255'],
@@ -91,6 +94,9 @@ class SettingController extends Controller
             ), 'branding');
             Setting::put('logo_light_path', MediaUploader::store(
                 $data['logo_light_path'] ?? null, 'site', $existing['logo_light_path'] ?? null
+            ), 'branding');
+            Setting::put('share_image_path', MediaUploader::store(
+                $data['share_image_path'] ?? null, 'site', $existing['share_image_path'] ?? null
             ), 'branding');
         });
 

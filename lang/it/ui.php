@@ -46,7 +46,7 @@ return [
         'info_eyebrow' => 'Chi siamo',
         'info_heading' => 'Più di una rappresentanza.',
         'info_body' => [
-            'In VERTEX Football Agency siamo più che agenti di calcio con licenza: siamo una squadra unita, impegnata ad aiutare i giocatori di talento a raggiungere il punto più alto della loro carriera.',
+            'VERTEX Football Agency — una squadra che aiuta i giocatori di talento a esprimere al massimo il proprio potenziale e a raggiungere la vetta più alta della loro carriera.',
             'Dagli anni del settore giovanile al palcoscenico professionistico, siamo al fianco di ogni giocatore e ne sosteniamo lo sviluppo tecnico, fisico, mentale e personale. Crediamo che il successo si costruisca molto prima del primo contratto da professionista: per questo investiamo in ogni passo del percorso.',
             'Non siamo soltanto i tuoi rappresentanti. Siamo il tuo partner di fiducia, il tuo sostegno più solido e la tua squadra, al lavoro ogni giorno perché tu raggiunga il tuo Vertex.',
         ],

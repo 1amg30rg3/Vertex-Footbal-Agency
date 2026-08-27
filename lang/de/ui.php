@@ -46,7 +46,7 @@ return [
         'info_eyebrow' => 'Wer wir sind',
         'info_heading' => 'Mehr als Beratung.',
         'info_body' => [
-            'Bei der VERTEX Football Agency sind wir mehr als lizenzierte Spielerberater — wir sind ein geschlossenes Team, das talentierte Spieler dabei unterstützt, den höchsten Punkt ihrer Karriere zu erreichen.',
+            'VERTEX Football Agency — ein Team, das talentierten Spielern hilft, ihr volles Potenzial zu entfalten und den höchsten Gipfel ihrer Karriere zu erklimmen.',
             'Von den Jahren in der Akademie bis zur Profibühne stehen wir jedem Spieler zur Seite und fördern seine technische, körperliche, mentale und persönliche Entwicklung. Wir glauben, dass Erfolg lange vor dem ersten Profivertrag entsteht — deshalb investieren wir in jeden Schritt des Weges.',
             'Wir sind nicht nur Ihre Vertretung. Wir sind Ihr verlässlicher Partner, Ihre stärkste Stütze und Ihr Team — und arbeiten jeden Tag daran, dass Sie Ihren Vertex erreichen.',
         ],
